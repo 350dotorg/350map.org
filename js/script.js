@@ -1,4 +1,4 @@
-var map = new L.Map('map').setView([0, 0], 2).locate({setView: true, maxZoom: 16});
+var map = new L.Map('map').setView([0, 0], 2).locate({setView: true, maxZoom: 10});
 
 L.esri.basemapLayer("Streets").addTo(map);
 
