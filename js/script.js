@@ -34,6 +34,8 @@ function initializeTabletopObject(dataSpreadsheet){
 // It creates the marker, sets location
 // And plots on it on our map
 function startUpLeafet(spreadsheetData) {
+    var template = Handlebars.compile($("#handlebars_template").html());
+
     var icons = {};
     for( var i=0; i < spreadsheetData.Markers.elements.length; ++i ) {
         var row = spreadsheetData.Markers.elements[i];
@@ -53,11 +55,6 @@ function startUpLeafet(spreadsheetData) {
 	// Tabletop creates arrays out of our data
 	// We'll loop through them and create markers for each
 	for (var num = 0; num < tabletopData.length; num ++) {
-		var dataOne = tabletopData[num].name;
-		var dataTwo = tabletopData[num].geom;
-		var dataThree = tabletopData[num].website;
-		var dataFour= tabletopData[num].description;
-
 		// Pull in our lat, long information
 		var dataLat = tabletopData[num].latitude;
 		var dataLong = tabletopData[num].longitude;
@@ -70,18 +67,10 @@ function startUpLeafet(spreadsheetData) {
                 var layer = new L.Marker(marker_location);
             }
     
-    	// Create the popup
-    	// Change 'Address', 'City', etc.
-		// To match table column names in your table
-    	var popup = "<div class=popup_box" + "id=" + num + ">";
-
-    	popup += "<div class='popup_box_header'><strong><a href='" + dataThree + "'>" + dataOne + "</a></strong></div>";
-    	popup += "<em>" + dataTwo + "</em>";
-    	popup += "<hr />";
-    	popup += dataFour;
-    	popup += "</div>";
-    	// Add to our marker
-		layer.bindPopup(popup);
+    	    // Create the popup by rendering handlebars template
+    	    var popup = template(tabletopData[num]);
+    	    // Add to our marker
+	    layer.bindPopup(popup);
 	
             var layerGroup = layers[tabletopData[num].type];
             if( typeof(layerGroup) === "undefined" ) {
