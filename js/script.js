@@ -1,8 +1,6 @@
 var map = new L.Map('map').setView([0, 0], 2).locate({setView: true, maxZoom: 16});
 
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+L.esri.basemapLayer("Streets").addTo(map);
 
 /*
 new L.Control.GeoSearch({
