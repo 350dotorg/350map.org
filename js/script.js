@@ -1,10 +1,8 @@
 var map = new L.Map('map').setView([0, 0], 2).locate({setView: true, maxZoom: 16});
 
-// Information for the base tile via Cloudmade
-var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/a7f37d1bac974b23b07c37723119fe3e/2402/256/{z}/{x}/{y}.png'
-var cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18});
-// Add to map
-map.addLayer(cloudmade);
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
 /*
 new L.Control.GeoSearch({
