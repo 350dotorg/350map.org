@@ -16,7 +16,7 @@ map.addLayer(cloudmade);
 // First we'll initialize Tabletop with our spreadsheet
 var jqueryNoConflict = jQuery;
 jqueryNoConflict(document).ready(function(){
-	initializeTabletopObject('0As3JvOeYDO50dF9NWWRiaTdqNmdKQ1lCY3dpdDhZU3c');
+	initializeTabletopObject('0Agcr__L1I1PDdEpoMnhxR0RHdkFsWlFtNTlEZlltR0E');
 });
 
 // Pull data from Google spreadsheet
@@ -35,44 +35,40 @@ function initializeTabletopObject(dataSpreadsheet){
 // It creates the marker, sets location
 // And plots on it on our map
 function startUpLeafet(tabletopData) {
+    layerGroup = L.featureGroup([]).addTo(map);
 	// Tabletop creates arrays out of our data
 	// We'll loop through them and create markers for each
 	for (var num = 0; num < tabletopData.length; num ++) {
-		// Our table columns
-		// Change 'brewery', 'address', etc.
-		// To match table column names in your table
-		var dataOne = tabletopData[num].brewery;
-		var dataTwo = tabletopData[num].address;
-		var dataThree = tabletopData[num].city;
-		var dataFour= tabletopData[num].phone;
-		var dataFive = tabletopData[num].website;
+		var dataOne = tabletopData[num].name;
+		var dataTwo = tabletopData[num].geom;
+		var dataThree = tabletopData[num].website;
+		var dataFour= tabletopData[num].description;
 
 		// Pull in our lat, long information
 		var dataLat = tabletopData[num].latitude;
 		var dataLong = tabletopData[num].longitude;
-
 		// Add to our marker
 		marker_location = new L.LatLng(dataLat, dataLong);
 		// Create the marker
-    	layer = new L.Marker(marker_location);
+    	var layer = new L.Marker(marker_location);
     
     	// Create the popup
     	// Change 'Address', 'City', etc.
 		// To match table column names in your table
     	var popup = "<div class=popup_box" + "id=" + num + ">";
-    	popup += "<div class='popup_box_header'><strong>" + dataOne + "</strong></div>";
+
+    	popup += "<div class='popup_box_header'><strong><a href='" + dataThree + "'>" + dataOne + "</a></strong></div>";
+    	popup += "<em>" + dataTwo + "</em>";
     	popup += "<hr />";
-    	popup += "<strong>Address:</strong> " + dataTwo + "<br />";
-    	popup += "<strong>City:</strong> " + dataThree + "<br />";
-    	popup += "<strong>Phone:</strong> " + dataFour + "<br />";
-    	popup += "<strong>Website:</strong> " + dataFive + "<br />";
+    	popup += dataFour;
     	popup += "</div>";
     	// Add to our marker
 		layer.bindPopup(popup);
 	
 		// Add marker to our to map
-		map.addLayer(layer);
+		layerGroup.addLayer(layer);
 	}
+    map.fitBounds(layerGroup.getBounds());
 };
 
 
