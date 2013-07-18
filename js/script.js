@@ -1,9 +1,4 @@
-// Set view of Leaflet map based on screen size
-if ($(window).width() < 626) {
-	var map = new L.Map('map').setView([42,-93],6);
-} else {
-	var map = new L.Map('map').setView([42,-91.5],7);
-}
+var map = new L.Map('map').setView([0, 0], 2).locate({setView: true, maxZoom: 16});
 
 // Information for the base tile via Cloudmade
 var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/f14689c8008d43da9028a70e6a8e710a/2402/256/{z}/{x}/{y}.png'
@@ -11,6 +6,11 @@ var cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18});
 // Add to map
 map.addLayer(cloudmade);
 
+/*
+new L.Control.GeoSearch({
+    provider: new L.GeoSearch.Provider.Google()
+}).addTo(map);
+*/
 
 // Here's the Tabletop feed
 // First we'll initialize Tabletop with our spreadsheet
