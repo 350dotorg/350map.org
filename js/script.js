@@ -25,7 +25,6 @@ function initializeTabletopObject(dataSpreadsheet){
 	Tabletop.init({
     	key: dataSpreadsheet,
     	callback: startUpLeafet,
-    	simpleSheet: true,
     	debug: false
     });
 }
@@ -34,7 +33,21 @@ function initializeTabletopObject(dataSpreadsheet){
 // Then gets it ready for Leaflet.
 // It creates the marker, sets location
 // And plots on it on our map
-function startUpLeafet(tabletopData) {
+function startUpLeafet(spreadsheetData) {
+    var icons = {};
+    for( var i=0; i < spreadsheetData.Markers.elements.length; ++i ) {
+        var row = spreadsheetData.Markers.elements[i];
+        icons[row.type] = L.icon({ 
+            iconUrl: row.iconurl,
+            iconSize: [parseInt(row.iconwidth), parseInt(row.iconheight)],
+            iconAnchor: [parseInt(row.iconanchorx), parseInt(row.iconanchory)],
+            popupAnchor: [parseInt(row.popupanchorx), parseInt(row.popupanchory)],
+            shadowUrl: row.shadowurl,
+            shadowSize: [parseInt(row.shadowwidth), parseInt(row.shadowheight)],
+            shadowAnchor: [parseInt(row.shadowanchorx), pareInt(row.shadowanchory)],
+        });
+    }
+    var tabletopData = spreadsheetData.Objects.elements;
     layerGroup = L.featureGroup([]).addTo(map);
 	// Tabletop creates arrays out of our data
 	// We'll loop through them and create markers for each
@@ -50,7 +63,11 @@ function startUpLeafet(tabletopData) {
 		// Add to our marker
 		marker_location = new L.LatLng(dataLat, dataLong);
 		// Create the marker
-    	var layer = new L.Marker(marker_location);
+            if( icons[tabletopData[num].type] ) {
+    	        var layer = new L.Marker(marker_location, {"icon": icons[tabletopData[num].type]});
+            } else {
+                var layer = new L.Marker(marker_location);
+            }
     
     	// Create the popup
     	// Change 'Address', 'City', etc.
