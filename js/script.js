@@ -1,12 +1,12 @@
-var map = new L.Map('map').setView([0, 0], 2).locate({setView: true, maxZoom: 10});
+var map = new L.Map('map', {"maxZoom": 16}).setView([0, 0], 2).locate({setView: true, maxZoom: 10});
 
 L.esri.basemapLayer("Streets").addTo(map);
 
-/*
 new L.Control.GeoSearch({
-    provider: new L.GeoSearch.Provider.Google()
+    provider: new L.GeoSearch.Provider.Google(),
+    "zoomLevel": 8,
+    "disableMarker": true
 }).addTo(map);
-*/
 
 // Here's the Tabletop feed
 // First we'll initialize Tabletop with our spreadsheet
