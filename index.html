@@ -30,19 +30,25 @@
 	<meta property="twitter:description" content="his template pulls data from a Google spreadsheet and pushes it to a Leaflet map. The data we are using in this example is a list of breweries in Iowa.">
 	<meta property="twitter:image" content="http://wcfcourier.com/app/special/tabletop_to_leaflet/imgs/ss.jpg">
 
-	<!-- CSS -->
-	<link rel="stylesheet" href="css/leaflet.css" />
-	<!--[if lte IE 8]>
-		<link rel="stylesheet" href="css/leaflet.ie.css" />
-	<![endif]-->
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.css" />
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.ie.css" />
+            <![endif]-->
+        <script src="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.js"></script>
+
+	<!-- Javascript -->
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+
+        <script type="text/javascript" src="markercluster/leaflet.markercluster.js"></script>
+        <link rel="stylesheet" href="markercluster/MarkerCluster.css" />
+        <link rel="stylesheet" href="markercluster/MarkerCluster.Default.css" />
+        <!--[if lte IE 8]><link rel="stylesheet" href="markercluster/MarkerCluster.Default.ie.css" /><![endif]-->
+
 	<link rel="stylesheet" href="css/bootstrap.min.css" />
 	<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-	<!-- Javascript -->
-	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="js/leaflet.js"></script>
 	<script type="text/javascript" src="js/tabletop.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 

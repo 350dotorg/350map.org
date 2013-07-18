@@ -44,11 +44,12 @@ function startUpLeafet(spreadsheetData) {
             popupAnchor: [parseInt(row.popupanchorx), parseInt(row.popupanchory)],
             shadowUrl: row.shadowurl,
             shadowSize: [parseInt(row.shadowwidth), parseInt(row.shadowheight)],
-            shadowAnchor: [parseInt(row.shadowanchorx), pareInt(row.shadowanchory)],
+            shadowAnchor: [parseInt(row.shadowanchorx), parseInt(row.shadowanchory)],
         });
     }
-    var tabletopData = spreadsheetData.Objects.elements;
-    layerGroup = L.featureGroup([]).addTo(map);
+    window.layers = {};
+    var clusters = L.markerClusterGroup();
+    var tabletopData = foo = spreadsheetData.Objects.elements;
 	// Tabletop creates arrays out of our data
 	// We'll loop through them and create markers for each
 	for (var num = 0; num < tabletopData.length; num ++) {
@@ -82,10 +83,31 @@ function startUpLeafet(spreadsheetData) {
     	// Add to our marker
 		layer.bindPopup(popup);
 	
-		// Add marker to our to map
-		layerGroup.addLayer(layer);
+            var layerGroup = layers[tabletopData[num].type];
+            if( typeof(layerGroup) === "undefined" ) {
+                layers[tabletopData[num].type] = layerGroup = L.layerGroup();
+            }
+                                    
+	    // Add marker to our to map
+	    layerGroup.addLayer(layer);
 	}
-    map.fitBounds(layerGroup.getBounds());
+
+    var uiLayers = {};
+    $.each(layers, function(i, n) {
+//        n.addTo(map);
+        clusters.addLayers(n.getLayers());
+        uiLayers[i] = L.layerGroup().addTo(map);
+    });
+    clusters.addTo(map);
+    L.control.layers(null, uiLayers).addTo(map);
+    // https://github.com/Leaflet/Leaflet.markercluster/issues/145#issuecomment-19439160
+    map.on("overlayadd", function(e) {
+        clusters.addLayers(layers[e.name].getLayers());
+    }).on("overlayremove", function(e) {
+        clusters.removeLayers(layers[e.name].getLayers());
+    });
+    foo = clusters;
+
 };
 
 
