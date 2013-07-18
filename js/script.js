@@ -106,7 +106,6 @@ function startUpLeafet(spreadsheetData) {
     }).on("overlayremove", function(e) {
         clusters.removeLayers(layers[e.name].getLayers());
     });
-    foo = clusters;
 
 };
 
