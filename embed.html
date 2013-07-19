@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2">
+          <div>
+            This page embeds the map in an iframe.
+          </div>
+          <hr style="clear: both">
+          <div>
+            Possible query string arguments:
+          </div>
+          <dl>
+            <dt>lat</dt><dd>initial latitude; default=0</dd>
+            <dt>lng</dt><dd>initial longitude; default=0</dd>
+            <dt>zoom</dt><dd>initial zoom level; default=2 (range=0-16)</dd>
+            <dt>gl=n</dt><dd>if you add this, the map will not attempt to set its initial zoom and position to the user's current location if the user is willing to allow access to it</dd>
+            <dt>searchZoom</dt><dd>how much to zoom in when the user types a location in the search bar; default=8</dd>
+            <dt>lc=n</dt><dd>if you add this, the layer-toggling control will be disabled, so the user cannot add or remove map layers</dd>
+            <dt>layer</dt><dd>Which layer(s) to install on the map.  If left blank, all available layers will be used.  If one or more ?layer parameters are provided, then only those layers will be displayed.  For example, "?layer=GROW Divestment Events&lc=n" would provide a map that only shows GROW Divestment Events (and disables the layer-toggling control since only one layer exists).  "?layer=GROW Divestment Events&layer=Local Groups" would show all GROW Divestment Events and Local Groups, but no other layers.  Note that the parameter(s) must match the layer names in the spreadsheet exactly, including spacing and capitalization.</dd>
+          </dl>
+        </div>
+        <div class="span10">
+          <iframe style="width: 100%; height: 200px" src="index.html?lat=40&lng=-80&zoom=10"></iframe>
+        </div>
+      </div>
+    </div>    
+  </body>
+</html>
