@@ -21,7 +21,8 @@ function initializeTabletopObject(dataSpreadsheet){
 	Tabletop.init({
     	key: dataSpreadsheet,
     	callback: startUpLeafet,
-    	debug: false
+    	debug: false,
+        proxy: "http://350dotorg.github.io/megamap-data"
     });
 }
 
