@@ -31,7 +31,13 @@ function initializeTabletopObject(dataSpreadsheet){
 // It creates the marker, sets location
 // And plots on it on our map
 function startUpLeafet(spreadsheetData) {
-    var template = Handlebars.compile($("#handlebars_template").html());
+
+    var default_template = Handlebars.compile($("#handlebars_template").html());
+    var templates = {};
+    for( var i=0; i < spreadsheetData.Layers.elements.length; ++i ) {
+        var row = spreadsheetData.Layers.elements[i];
+        templates[row.type] = Handlebars.compile(row.template);
+    }
 
     var icons = {};
     for( var i=0; i < spreadsheetData.Markers.elements.length; ++i ) {
@@ -48,39 +54,36 @@ function startUpLeafet(spreadsheetData) {
     }
     window.layers = {};
     var clusters = L.markerClusterGroup();
-    var tabletopData = foo = spreadsheetData.Objects.elements;
-	// Tabletop creates arrays out of our data
-	// We'll loop through them and create markers for each
+    $.each(spreadsheetData, function(data_type, elements) {
+        if( data_type == "Markers" || data_type == "Layers" ) { return; }
+        var tabletopData = elements.elements;
 	for (var num = 0; num < tabletopData.length; num ++) {
-		// Pull in our lat, long information
-		var dataLat = tabletopData[num].latitude;
-		var dataLong = tabletopData[num].longitude;
-		// Add to our marker
-		marker_location = new L.LatLng(dataLat, dataLong);
-		// Create the marker
-            if( icons[tabletopData[num].type] ) {
-    	        var layer = new L.Marker(marker_location, {"icon": icons[tabletopData[num].type]});
+	    var dataLat = tabletopData[num].latitude;
+	    var dataLong = tabletopData[num].longitude;
+	    var marker_location = new L.LatLng(dataLat, dataLong);
+            if( icons[data_type] ) {
+    	        var layer = new L.Marker(marker_location, {"icon": icons[data_type]});
             } else {
                 var layer = new L.Marker(marker_location);
             }
-    
     	    // Create the popup by rendering handlebars template
-    	    var popup = template(tabletopData[num]);
+    	    var popup = (templates[data_type] || default_template)(tabletopData[num]);
     	    // Add to our marker
 	    layer.bindPopup(popup);
 	
-            var layerGroup = layers[tabletopData[num].type];
+            var layerGroup = layers[data_type];
             if( typeof(layerGroup) === "undefined" ) {
-                layers[tabletopData[num].type] = layerGroup = L.layerGroup();
+                layers[data_type] = layerGroup = L.layerGroup();
             }
-                                    
+            
 	    // Add marker to our to map
 	    layerGroup.addLayer(layer);
 	}
+    });
+    
 
     var uiLayers = {};
     $.each(layers, function(i, n) {
-//        n.addTo(map);
         clusters.addLayers(n.getLayers());
         uiLayers[i] = L.layerGroup().addTo(map);
     });
