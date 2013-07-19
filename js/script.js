@@ -1,10 +1,45 @@
-var map = new L.Map('map', {"maxZoom": 16}).setView([0, 0], 2).locate({setView: true, maxZoom: 10});
+window.getMegamapArgs = function() {
+  var argsStr = window.location.search;
+  var pairs = argsStr.replace(/^\?/, '').split('&');
+  var args = {};
+  unesc = unescape;
+  if ( typeof(decodeURIComponent) != 'undefined' )
+      unesc = decodeURIComponent;
+  for ( var i = 0; i < pairs.length; ++i ) {
+      pair = pairs[i].split('=');
+      if (pair[0]) {
+          if (pair[1])
+             pair[1] = unesc(pair[1].replace(/\+/g, ' '));
+          var key = unesc(pair[0].replace(/\+/g, ' '));
+          if( key == "layer" ) {
+              if( !args[key] ) {
+                  args[key] = [];
+              }
+              args[key].push(pair[1]);
+          } else {
+              args[key] = pair[1];
+          }
+      }
+  }
+  return args;
+}
+
+var args = getMegamapArgs();
+var lat = parseFloat(args.lat) || 0,
+    lng = parseFloat(args.lng) || 0,
+    zoom = parseInt(args.zoom) || 2,
+    locate = (args.gl !== "n"),
+    searchZoom = parseInt(args.searchZoom) || 8,
+    layerControl = args.lc !== "n",
+    layersToShow = args.layer;
+var map = new L.Map('map', {"maxZoom": 16}).setView([lat, lng], zoom);
+if( locate ) { map.locate({setView: true, maxZoom: 10}); }
 
 L.esri.basemapLayer("Streets").addTo(map);
 
 new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.Google(),
-    "zoomLevel": 8,
+    "zoomLevel": searchZoom,
     "disableMarker": true
 }).addTo(map);
 
@@ -84,11 +119,15 @@ function startUpLeafet(spreadsheetData) {
 
     var uiLayers = {};
     $.each(layers, function(i, n) {
-        clusters.addLayers(n.getLayers());
-        uiLayers[i] = L.layerGroup().addTo(map);
+        if( !layersToShow || ($.inArray(i, layersToShow) !== -1) ) {
+          clusters.addLayers(n.getLayers());
+          uiLayers[i] = L.layerGroup().addTo(map);
+        }
     });
     clusters.addTo(map);
-    L.control.layers(null, uiLayers).addTo(map);
+    if( layerControl ) {
+        L.control.layers(null, uiLayers).addTo(map);
+    }
     // https://github.com/Leaflet/Leaflet.markercluster/issues/145#issuecomment-19439160
     map.on("overlayadd", function(e) {
         clusters.addLayers(layers[e.name].getLayers());
