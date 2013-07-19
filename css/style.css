@@ -273,10 +273,6 @@ hr {
     	margin-top: 55px;
 	}
 
-	.leaflet-right {
-		display: none;
-	}
-
 	.leaflet-container .leaflet-control-attribution, .leaflet-container .leaflet-control-scale {
 		font-size: 10px;
 	}
