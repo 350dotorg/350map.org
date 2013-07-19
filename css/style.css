@@ -270,12 +270,16 @@ hr {
 	
 	/* Leaflet controls */
 	.leaflet-top {
-    	margin-top: 55px;
+    	    margin-top: 55px;
 	}
 
 	.leaflet-top.leaflet-center {
-    	margin-top: 0;
+    	    margin-top: 0;
 	}
+
+        .leaflet-control-layers-list label {
+            font-size: 1.5em;
+        }
 
 	.leaflet-container .leaflet-control-attribution, .leaflet-container .leaflet-control-scale {
 		font-size: 10px;
