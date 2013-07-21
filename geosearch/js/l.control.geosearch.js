@@ -84,7 +84,7 @@ L.Control.GeoSearch = L.Control.extend({
 
             if(typeof provider.GetLocations == 'function') {
                 var results = provider.GetLocations(qry, function(results) {
-                    this._processResults(results);
+                    this._processResults(results, qry);
                 }.bind(this));
             }
             else {
@@ -93,7 +93,7 @@ L.Control.GeoSearch = L.Control.extend({
                 $.getJSON(url, function (data) {
                     try {
                         var results = provider.ParseJSON(data);
-                        this._processResults(results);
+                        this._processResults(results, qry);
                     }
                     catch (error) {
                         this._printError(error);
@@ -106,15 +106,15 @@ L.Control.GeoSearch = L.Control.extend({
         }
     },
 
-    _processResults: function(results) {
+    _processResults: function(results, qry) {
         if (results.length == 0)
             throw this._config.notFoundMessage;
 
-        this._map.fireEvent('geosearch_foundlocations', {Locations: results});
-        this._showLocation(results[0]);
+        this._map.fireEvent('geosearch_foundlocations', {Locations: results, Query: qry});
+        this._showLocation(results[0], qry);
     },
 
-    _showLocation: function (location) {
+    _showLocation: function (location, qry) {
         if (!this._config.disableMarker) {
             if (typeof this._positionMarker === 'undefined') {
                 this._positionMarker = L.marker([location.Y, location.X]).addTo(this._map);
@@ -124,7 +124,7 @@ L.Control.GeoSearch = L.Control.extend({
             }
         }
         this._map.setView([location.Y, location.X], this._config.zoomLevel, false);
-        this._map.fireEvent('geosearch_showlocation', {Location: location});
+        this._map.fireEvent('geosearch_showlocation', {Location: location, Query: qry});
     },
 
     _printError: function(message) {

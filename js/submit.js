@@ -46,9 +46,31 @@ new L.Control.GeoSearch({
     }
 }).addTo(map);
 
-map.on("geosearch_showlocation", function(e) {
-    var lat = e.Location.Y,
-        lng = e.Location.X,
-        text = e.Location.Label;
-    searchMarker.bindPopup("<h3>Submit an event</h3><div><a href='https://docs.google.com/forms/d/1-nGFSRd46ujzwNA9Cn-45eG46hbwKGKjwahewgBMJsA/viewform?entry.681603033=" + text + "&entry.396961874=" + lat + "&entry.1981691483=" + lng + "'>Click here</a> to add an event at this location, or choose a different location using the search bar above.").fire("click");
+$(document).ready(function() {
+    Tabletop.init({
+    	key: "0Agcr__L1I1PDdEpoMnhxR0RHdkFsWlFtNTlEZlltR0E",
+    	callback: startUpLeafet,
+    	debug: false,
+        proxy: "http://350dotorg.github.io/megamap-data"
+    });
 });
+
+function startUpLeafet(spreadsheetData) {
+    var form_templates = {};
+    for( var i=0; i < spreadsheetData.Layers.elements.length; ++i ) {
+        var row = spreadsheetData.Layers.elements[i];
+        console.log(row);
+        if( row.publicsubmissionform ) {
+            form_templates[row.type] = Handlebars.compile(row.publicsubmissionform);
+        }
+    }
+    map.on("geosearch_showlocation", function(e) {
+        var lat = e.Location.Y,
+            lng = e.Location.X,
+            text = e.Location.Label;
+
+        var form_template = form_templates["GROW Divestment Events"];
+        searchMarker.bindPopup(form_template({lat:lat,lng:lng,location:text,query:e.Query})).fire("click");
+    });
+    
+};

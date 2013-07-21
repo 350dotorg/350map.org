@@ -71,7 +71,9 @@ function startUpLeafet(spreadsheetData) {
     var templates = {};
     for( var i=0; i < spreadsheetData.Layers.elements.length; ++i ) {
         var row = spreadsheetData.Layers.elements[i];
-        templates[row.type] = Handlebars.compile(row.template);
+        if( row.template ) {
+            templates[row.type] = Handlebars.compile(row.template);
+        }
     }
 
     var icons = {};
