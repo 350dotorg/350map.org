@@ -30,6 +30,7 @@ L.Control.AddMarker = L.Control.extend({
                 this._map = map;
                 this._positionMarker = new L.Marker([0,0]);
                 this._defaultIcon = new L.Icon.Default();
+                this._onInputClick();
 
 		return this._container;
 	},
@@ -263,7 +264,6 @@ throw error;
 		return label;
 	},
 
-    // @@TODO
 	_onInputClick: function () {
 		var i, input, obj,
 		    inputs = this._form.getElementsByTagName('input'),
@@ -288,7 +288,7 @@ throw error;
 	},
 
 	_collapse: function () {
-	return;	this._container.className = this._container.className.replace(' leaflet-control-addmarker-expanded', '');
+	this._container.className = this._container.className.replace(' leaflet-control-addmarker-expanded', '');
 	}
 });
 
