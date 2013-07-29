@@ -68,13 +68,18 @@ function initializeTabletopObject(dataSpreadsheet){
 function startUpLeafet(spreadsheetData) {
 
     var default_template = Handlebars.compile($("#handlebars_template").html());
-    var templates = {};
+    var templates = {}, form_templates = {};
     for( var i=0; i < spreadsheetData.Layers.elements.length; ++i ) {
         var row = spreadsheetData.Layers.elements[i];
         if( row.template ) {
             templates[row.type] = Handlebars.compile(row.template);
         }
+        if( row.publicsubmissionform ) {
+            form_templates[row.type] = Handlebars.compile(row.publicsubmissionform);
+        }
+
     }
+
 
     var icons = {};
     for( var i=0; i < spreadsheetData.Markers.elements.length; ++i ) {
@@ -130,11 +135,21 @@ function startUpLeafet(spreadsheetData) {
     if( layerControl ) {
         L.control.layers(null, uiLayers).addTo(map);
     }
+    L.control.addmarker(uiLayers, icons).addTo(map);
+
     // https://github.com/Leaflet/Leaflet.markercluster/issues/145#issuecomment-19439160
     map.on("overlayadd", function(e) {
         clusters.addLayers(layers[e.name].getLayers());
     }).on("overlayremove", function(e) {
         clusters.removeLayers(layers[e.name].getLayers());
+    }).on("addmarker_geosearch_showlocation", function(e) {
+        var lat = e.Location.Y,
+            lng = e.Location.X,
+            text = e.Location.Label,
+            layer = e.Layer;
+
+        var form_template = form_templates[layer.name];
+        e.Marker.bindPopup(form_template({lat:lat,lng:lng,location:text,query:e.Query})).fire("click");
     });
 
 };

@@ -1,0 +1,62 @@
+.leaflet-control-addmarker-toggle {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	}
+.leaflet-control-addmarker {
+	box-shadow: 0 1px 7px rgba(0,0,0,0.4);
+	background: #f8f8f9;
+	-webkit-border-radius: 5px;
+	        border-radius: 5px;
+	}
+#leaflet-control-addmarker-qry {
+        margin-bottom: 0;
+        }
+.leaflet-control-addmarker-toggle {
+	background-image: url(addmarker.png);
+	width: 36px;
+	height: 36px;
+	}
+.leaflet-retina .leaflet-control-addmarker-toggle {
+	background-image: url(addmarker-2x.png);
+	background-size: 26px 26px;
+	}
+.leaflet-touch .leaflet-control-addmarker-toggle {
+	width: 44px;
+	height: 44px;
+	}
+.leaflet-control-addmarker .leaflet-control-addmarker-list,
+.leaflet-control-addmarker-expanded .leaflet-control-addmarker-toggle {
+	display: none;
+	}
+.leaflet-control-addmarker-expanded .leaflet-control-addmarker-list {
+	display: block;
+	position: relative;
+	}
+.leaflet-control-addmarker-expanded {
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+	}
+.leaflet-control-addmarker-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	}
+.leaflet-control-addmarker label {
+	display: block;
+	}
+.leaflet-control-addmarker-separator {
+	height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;
+	}
+.leaflet-touch .leaflet-control-addmarker,
+.leaflet-touch .leaflet-bar {
+	box-shadow: none;
+	}
+.leaflet-touch .leaflet-control-addmarker,
+.leaflet-touch .leaflet-bar {
+	border: 4px solid rgba(0,0,0,0.3);
+	}
+
