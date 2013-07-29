@@ -31,6 +31,7 @@ var lat = parseFloat(args.lat) || 0,
     locate = (args.gl !== "n"),
     searchZoom = parseInt(args.searchZoom) || 8,
     layerControl = args.lc !== "n",
+    addMarkerControl = args.amc !== "n",
     layersToShow = args.layer;
 var map = new L.Map('map', {"maxZoom": 16}).setView([lat, lng], zoom);
 if( locate ) { map.locate({setView: true, maxZoom: 10}); }
@@ -135,7 +136,9 @@ function startUpLeafet(spreadsheetData) {
     if( layerControl ) {
         L.control.layers(null, uiLayers).addTo(map);
     }
-    L.control.addmarker(uiLayers, icons).addTo(map);
+    if( addMarkerControl ) {
+        L.control.addmarker(uiLayers, icons).addTo(map);
+    }
 
     // https://github.com/Leaflet/Leaflet.markercluster/issues/145#issuecomment-19439160
     map.on("overlayadd", function(e) {
