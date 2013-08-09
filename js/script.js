@@ -73,7 +73,6 @@ function startUpLeafet(spreadsheetData) {
     for( var i=0; i < spreadsheetData.Layers.elements.length; ++i ) {
         var row = spreadsheetData.Layers.elements[i];
         if( row.template ) {
-console.log(row.type, row.template);
             templates[row.type] = Handlebars.compile(row.template);
         }
         if( row.publicsubmissionform ) {
@@ -133,7 +132,6 @@ console.log(row.type, row.template);
                 callback: function(public_data) { 
                     for( var i=0; i<public_data.length; ++i ) {
                         var public_row = public_data[i];
-console.log(public_row);
                         var marker_location = new L.LatLng(public_row.latitude, public_row.longitude);
                         if( icons[data_type] ) {
     	                    var layer = new L.Marker(marker_location, {"icon": icons[data_type]});
@@ -177,7 +175,13 @@ console.log(public_row);
         L.control.layers(null, uiLayers).addTo(map);
     }
     if( addMarkerControl ) {
-        L.control.addmarker(uiLayers, icons).addTo(map);
+        var allowed = {};
+        $.each(uiLayers, function(i, n) { 
+            if( form_templates[i] && public_data_layers[i] ) {
+                allowed[i] = n;
+            }
+        });
+        L.control.addmarker(allowed, icons).addTo(map);
     }
 
     // https://github.com/Leaflet/Leaflet.markercluster/issues/145#issuecomment-19439160
