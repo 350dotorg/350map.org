@@ -69,16 +69,19 @@ function initializeTabletopObject(dataSpreadsheet){
 function startUpLeafet(spreadsheetData) {
 
     var default_template = Handlebars.compile($("#handlebars_template").html());
-    var templates = {}, form_templates = {};
+    var templates = {}, form_templates = {}, public_data_layers = {};
     for( var i=0; i < spreadsheetData.Layers.elements.length; ++i ) {
         var row = spreadsheetData.Layers.elements[i];
         if( row.template ) {
+console.log(row.type, row.template);
             templates[row.type] = Handlebars.compile(row.template);
         }
         if( row.publicsubmissionform ) {
             form_templates[row.type] = Handlebars.compile(row.publicsubmissionform);
         }
-
+        if( row.publicsubmissionspreadsheet ) {
+            public_data_layers[row.type] = row.publicsubmissionspreadsheet;
+        }
     }
 
 
@@ -121,10 +124,47 @@ function startUpLeafet(spreadsheetData) {
             
 	    // Add marker to our to map
 	    layerGroup.addLayer(layer);
+
 	}
+
+        if( public_data_layers[data_type] ) {
+            Tabletop.init({
+                key: public_data_layers[data_type],
+                callback: function(public_data) { 
+                    for( var i=0; i<public_data.length; ++i ) {
+                        var public_row = public_data[i];
+console.log(public_row);
+                        var marker_location = new L.LatLng(public_row.latitude, public_row.longitude);
+                        if( icons[data_type] ) {
+    	                    var layer = new L.Marker(marker_location, {"icon": icons[data_type]});
+                        } else {
+                            var layer = new L.Marker(marker_location);
+                        }
+    	                // Create the popup by rendering handlebars template
+    	                var popup = (templates[data_type] || default_template)(public_row);
+    	                // Add to our marker
+	                layer.bindPopup(popup);
+	                
+                        var layerGroup = layers[data_type];
+                        if( typeof(layerGroup) === "undefined" ) {
+                            layers[data_type] = layerGroup = L.layerGroup();
+                        }
+                        
+	                // Add marker to our to map
+	                layerGroup.addLayer(layer);
+                        clusters.removeLayers(layerGroup.getLayers());
+                        clusters.addLayers(layerGroup.getLayers());
+                    }
+                },
+                simpleSheet: true,
+                debug: false,
+                proxy: "http://350dotorg.github.io/megamap-data"
+            });
+        }
+
     });
     
-
+    
     var uiLayers = {};
     $.each(layers, function(i, n) {
         if( !layersToShow || ($.inArray(i, layersToShow) !== -1) ) {
