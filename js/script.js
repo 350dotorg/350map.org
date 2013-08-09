@@ -33,7 +33,7 @@ var lat = parseFloat(args.lat) || 0,
     layerControl = args.lc !== "n",
     addMarkerControl = args.amc !== "n",
     layersToShow = args.layer;
-var map = new L.Map('map', {"maxZoom": 16}).setView([lat, lng], zoom);
+var map = new L.Map('map', {"zoomControl": false, "maxZoom": 16}).setView([lat, lng], zoom);
 if( locate ) { map.locate({setView: true, maxZoom: 10}); }
 
 L.esri.basemapLayer("Streets").addTo(map);
@@ -183,6 +183,7 @@ function startUpLeafet(spreadsheetData) {
         });
         L.control.addmarker(allowed, icons).addTo(map);
     }
+    new L.Control.Zoom({ position: 'topleft' }).addTo(map);
 
     // https://github.com/Leaflet/Leaflet.markercluster/issues/145#issuecomment-19439160
     map.on("overlayadd", function(e) {
