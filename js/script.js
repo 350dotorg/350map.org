@@ -112,9 +112,11 @@ function startUpLeafet(spreadsheetData) {
                 var layer = new L.Marker(marker_location);
             }
     	    // Create the popup by rendering handlebars template
-    	    var popup = (templates[data_type] || default_template)(tabletopData[num]);
+    	    var popup = templates[data_type] && templates[data_type](tabletopData[num]);
     	    // Add to our marker
-	    layer.bindPopup(popup);
+            if( popup ) {
+	        layer.bindPopup(popup);
+            }
 	
             var layerGroup = layers[data_type];
             if( typeof(layerGroup) === "undefined" ) {
