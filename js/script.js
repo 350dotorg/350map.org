@@ -32,6 +32,7 @@ var lat = parseFloat(args.lat) || 0,
     searchZoom = parseInt(args.searchZoom) || 8,
     layerControl = args.lc !== "n",
     addMarkerControl = args.amc !== "n",
+    hidePastEvents = args.hpe !== "n",
     layersToShow = args.layer;
 var map = new L.Map('map', {"zoomControl": false, "maxZoom": 16}).setView([lat, lng], zoom);
 if( locate ) { map.locate({setView: true, maxZoom: 10}); }
@@ -99,12 +100,27 @@ function startUpLeafet(spreadsheetData) {
     }
     window.layers = {};
     var clusters = L.markerClusterGroup();
+    var testDate = new Date();
+    testDate.setDate(testDate.getDate() - 2);
     $.each(spreadsheetData, function(data_type, elements) {
         if( data_type == "Markers" || data_type == "Layers" ) { return; }
         var tabletopData = elements.elements;
 	for (var num = 0; num < tabletopData.length; num ++) {
 	    var dataLat = tabletopData[num].latitude;
 	    var dataLong = tabletopData[num].longitude;
+            if( !dataLat || !dataLong || !parseFloat(dataLat) || !parseFloat(dataLong) ) {
+                continue;
+            }
+            var date = tabletopData[num].date;
+            console.log(data_type, hidePastEvents, date);
+            if( hidePastEvents && date ) {
+                date = new Date(date);
+                if( !isNaN(date.getTime()) ) {
+                    if( date <= testDate ) {
+                        continue;
+                    }
+                }
+            }
 	    var marker_location = new L.LatLng(dataLat, dataLong);
             if( icons[data_type] ) {
     	        var layer = new L.Marker(marker_location, {"icon": icons[data_type]});
@@ -128,12 +144,28 @@ function startUpLeafet(spreadsheetData) {
 
 	}
 
-        if( public_data_layers[data_type] ) {
+        if( public_data_layers[data_type] && (
+            $.inArray(data_type, layersToShow) !== -1 )) {
             Tabletop.init({
                 key: public_data_layers[data_type],
                 callback: function(public_data) { 
                     for( var i=0; i<public_data.length; ++i ) {
                         var public_row = public_data[i];
+
+                        if( !public_row.latitude || !public_row.longitude || !parseFloat(public_row.latitude) || !parseFloat(public_row.longitude) ) {
+                            // @@TODO log it
+                            continue;
+                        }
+                        var date = public_row.date;
+                        if( hidePastEvents && date ) {
+                            date = new Date(date);
+                            if( !isNaN(date.getTime()) ) {
+                                if( date <= testDate ) {
+                                    continue;
+                                }
+                            }
+                        }
+
                         var marker_location = new L.LatLng(public_row.latitude, public_row.longitude);
                         if( icons[data_type] ) {
     	                    var layer = new L.Marker(marker_location, {"icon": icons[data_type]});
@@ -167,6 +199,7 @@ function startUpLeafet(spreadsheetData) {
     
     var uiLayers = {};
     $.each(layers, function(i, n) {
+console.log(i, $.inArray(i, layersToShow));
         if( !layersToShow || ($.inArray(i, layersToShow) !== -1) ) {
           clusters.addLayers(n.getLayers());
           uiLayers[i] = L.layerGroup().addTo(map);
