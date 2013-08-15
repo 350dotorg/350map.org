@@ -13,11 +13,8 @@
         margin-bottom: 0;
         }
 .leaflet-control-addmarker-toggle {
-	background-image: url(addmarker.png);
 	width: 36px;
 	height: 36px;
-	}
-.leaflet-retina .leaflet-control-addmarker-toggle {
 	background-image: url(addmarker-2x.png);
 	background-size: 26px 26px;
 	}
