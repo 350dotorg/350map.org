@@ -80,7 +80,7 @@
 	pointer-events: none;
 	}
 .leaflet-top {
-	top: 50px;
+	top: 0;
 	}
 .leaflet-right {
 	right: 0;
