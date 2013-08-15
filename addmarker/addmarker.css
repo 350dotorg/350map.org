@@ -17,6 +17,7 @@
 	height: 36px;
 	background-image: url(addmarker-2x.png);
 	background-size: 26px 26px;
+	z-index: 10;
 	}
 .leaflet-touch .leaflet-control-addmarker-toggle {
 	width: 44px;
