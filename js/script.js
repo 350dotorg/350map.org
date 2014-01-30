@@ -32,6 +32,7 @@ var lat = parseFloat(args.lat) || 0,
     searchZoom = parseInt(args.searchZoom) || 8,
     layerControl = args.lc !== "n",
     layerControlAlwaysShown = args.lcas === "y",
+    legendLayerControl = args.legendLayerControl === "y",
     addMarkerControl = args.amc !== "n",
     hidePastEvents = args.hpe !== "n",
     layersToShow = args.layer;
@@ -208,7 +209,12 @@ console.log(i, $.inArray(i, layersToShow));
     });
     clusters.addTo(map);
     if( layerControl ) {
-        var _control = L.control.legendlayers(null, uiLayers, icons).addTo(map);
+        var _control;
+        if( legendLayerControl ) {
+          _control = L.control.legendlayers(null, uiLayers, icons).addTo(map);
+        } else {
+          _control = L.control.layers(null, uiLayers).addTo(map);
+        }
         if( layerControlAlwaysShown ) {
             $(_control._container).addClass("leaflet-control-layers-always-expanded");
         }
