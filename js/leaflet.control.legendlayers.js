@@ -2,7 +2,7 @@
  * L.Control.Layers is a control to allow users to switch between different layers on the map.
  */
 
-L.Control.Layers = L.Control.extend({
+L.Control.LegendLayers = L.Control.extend({
 	options: {
 		collapsed: true,
 		position: 'topright',
@@ -240,6 +240,6 @@ L.Control.Layers = L.Control.extend({
 	}
 });
 
-L.control.layers = function (baseLayers, overlays, options) {
-	return new L.Control.Layers(baseLayers, overlays, options);
+L.control.legendlayers = function (baseLayers, overlays, options) {
+	return new L.Control.LegendLayers(baseLayers, overlays, options);
 };
