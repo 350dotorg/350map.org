@@ -208,7 +208,7 @@ console.log(i, $.inArray(i, layersToShow));
     });
     clusters.addTo(map);
     if( layerControl ) {
-        var _control = L.control.legendlayers(null, uiLayers).addTo(map);
+        var _control = L.control.legendlayers(null, uiLayers, icons).addTo(map);
         if( layerControlAlwaysShown ) {
             $(_control._container).addClass("leaflet-control-layers-always-expanded");
         }

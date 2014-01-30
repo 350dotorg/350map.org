@@ -9,12 +9,14 @@ L.Control.LegendLayers = L.Control.extend({
 		autoZIndex: true
 	},
 
-	initialize: function (baseLayers, overlays, options) {
+	initialize: function (baseLayers, overlays, icons, options) {
 		L.setOptions(this, options);
 
 		this._layers = {};
 		this._lastZIndex = 0;
 		this._handlingClick = false;
+
+                this._icons = icons;
 
 		for (var i in baseLayers) {
 			this._addLayer(baseLayers[i], i);
@@ -189,6 +191,21 @@ L.Control.LegendLayers = L.Control.extend({
 			input.type = 'checkbox';
 			input.className = 'leaflet-control-layers-selector';
 			input.defaultChecked = checked;
+                        input.style.display = "none";
+
+                        image = document.createElement('img');
+                        if( this._icons[obj.name] ) {
+                            var icon = this._icons[obj.name].options;
+                            image.src = icon.iconUrl;
+                            image.style.width = (icon.iconSize[0] * 0.7) + "px";
+                            image.style.height = (icon.iconSize[1] * 0.7) + "px";
+                        } else {
+                            image.src = "http://cdn.leafletjs.com/leaflet-0.6.3/images/marker-icon-2x.png";
+                            image.style.width = (25 * 0.7) + "px";
+                            image.style.height = (41 * 0.7) + "px";
+                        }
+                        image.className = 'leaflet-control-layerlegend-icon leaflet-clickable';
+                        label.appendChild(image);
 		} else {
 			input = this._createRadioElement('leaflet-base-layers', checked);
 		}
@@ -210,7 +227,7 @@ L.Control.LegendLayers = L.Control.extend({
 	},
 
 	_onInputClick: function () {
-		var i, input, obj,
+		var i, input, obj, iconImage,
 		    inputs = this._form.getElementsByTagName('input'),
 		    inputsLen = inputs.length;
 
@@ -219,6 +236,13 @@ L.Control.LegendLayers = L.Control.extend({
 		for (i = 0; i < inputsLen; i++) {
 			input = inputs[i];
 			obj = this._layers[input.layerId];
+
+                        iconImage = $(input).parent("label").find("img");
+                        if( input.checked ) {
+                            iconImage.removeClass("leaflet-control-layerlegend-icon-disabled");
+                        } else {
+                            iconImage.addClass("leaflet-control-layerlegend-icon-disabled");                            
+                        }
 
 			if (input.checked && !this._map.hasLayer(obj.layer)) {
 				this._map.addLayer(obj.layer);
@@ -240,6 +264,6 @@ L.Control.LegendLayers = L.Control.extend({
 	}
 });
 
-L.control.legendlayers = function (baseLayers, overlays, options) {
-	return new L.Control.LegendLayers(baseLayers, overlays, options);
+L.control.legendlayers = function (baseLayers, overlays, icons, options) {
+	return new L.Control.LegendLayers(baseLayers, overlays, icons, options);
 };
