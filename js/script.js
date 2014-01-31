@@ -101,6 +101,10 @@ function startUpLeafet(spreadsheetData) {
         });
     }
     window.layers = {};
+
+    // Initialize some layers by hand to force a certain display order
+    window.layers['Local Groups'] = L.layerGroup();
+
     var clusters = L.markerClusterGroup();
     var testDate = new Date();
     testDate.setDate(testDate.getDate() - 2);
@@ -201,7 +205,6 @@ function startUpLeafet(spreadsheetData) {
     
     var uiLayers = {};
     $.each(layers, function(i, n) {
-console.log(i, $.inArray(i, layersToShow));
         if( !layersToShow || ($.inArray(i, layersToShow) !== -1) ) {
           clusters.addLayers(n.getLayers());
           uiLayers[i] = L.layerGroup().addTo(map);
