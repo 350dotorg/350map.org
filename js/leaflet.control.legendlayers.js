@@ -191,7 +191,6 @@ L.Control.LegendLayers = L.Control.extend({
 			input.type = 'checkbox';
 			input.className = 'leaflet-control-layers-selector';
 			input.defaultChecked = checked;
-                        input.style.display = "none";
 
                         image = document.createElement('img');
                         if( this._icons[obj.name] ) {
@@ -205,7 +204,10 @@ L.Control.LegendLayers = L.Control.extend({
                             image.style.height = (41 * 0.7) + "px";
                         }
                         image.className = 'leaflet-control-layerlegend-icon leaflet-clickable';
-                        label.appendChild(image);
+                        var imageContainer = document.createElement('span');
+                        imageContainer.className = 'leaflet-control-layerlegend-icon-container';
+                        imageContainer.appendChild(image);
+                        label.appendChild(imageContainer);
 		} else {
 			input = this._createRadioElement('leaflet-base-layers', checked);
 		}
