@@ -218,13 +218,16 @@ function startUpLeafet(spreadsheetData) {
     }
     
     if( addMarkerControl ) {
-        var allowed = {};
+        var allowed = {}, numAllowed = 0;
         $.each(uiLayers, function(i, n) { 
             if( form_templates[i] && public_data_layers[i] ) {
                 allowed[i] = n;
+                ++numAllowed;
             }
         });
-        L.control.addmarker(allowed, icons).addTo(map);
+        if( numAllowed ) {
+            L.control.addmarker(allowed, icons).addTo(map);
+        }
     }
     new L.Control.Zoom({ position: 'topleft' }).addTo(map);
 
