@@ -1,5 +1,13 @@
 window.getMegamapArgs = function() {
-  var argsStr = window.location.search;
+  var argsStr = window.location.search.replace(/^\?/, '');
+  var embedArgsStr = $("script[src='js/script.js']").data("map-args") || '';
+
+  if( argsStr ) {
+    argsStr += '&' + embedArgsStr;
+  } else {
+    argsStr = embedArgsStr;
+  }
+
   var pairs = argsStr.replace(/^\?/, '').split('&');
   var args = {};
   unesc = unescape;
@@ -151,7 +159,7 @@ function startUpLeafet(spreadsheetData) {
 	}
 
         if( public_data_layers[data_type] && (
-            $.inArray(data_type, layersToShow) !== -1 )) {
+            !layersToShow || $.inArray(data_type, layersToShow) !== -1 )) {
             Tabletop.init({
                 key: public_data_layers[data_type],
                 callback: function(public_data) { 
