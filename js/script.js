@@ -79,8 +79,14 @@ function initializeTabletopObject(dataSpreadsheet){
 // And plots on it on our map
 function startUpLeafet(spreadsheetData) {
 
-    var default_template = Handlebars.compile($("#handlebars_template").html());
-    var templates = {}, form_templates = {}, public_data_layers = {};
+    window.default_template = Handlebars.compile($("#handlebars_template").html());
+    window.templates = {};
+    window.form_templates = {};
+    window.MAP_waiting = 0;
+
+    window.public_data_layers = {};
+    window.public_data_layer_queue = [];
+
     for( var i=0; i < spreadsheetData.Layers.elements.length; ++i ) {
         var row = spreadsheetData.Layers.elements[i];
         if( row.template ) {
@@ -90,12 +96,13 @@ function startUpLeafet(spreadsheetData) {
             form_templates[row.type] = Handlebars.compile(row.publicsubmissionform);
         }
         if( row.publicsubmissionspreadsheet ) {
+            public_data_layer_queue.push(row.type);
             public_data_layers[row.type] = row.publicsubmissionspreadsheet;
         }
     }
 
 
-    var icons = {};
+    window.icons = {};
     for( var i=0; i < spreadsheetData.Markers.elements.length; ++i ) {
         var row = spreadsheetData.Markers.elements[i];
         icons[row.type] = L.icon({ 
@@ -113,7 +120,7 @@ function startUpLeafet(spreadsheetData) {
     // Initialize some layers by hand to force a certain display order
     window.layers['Local Groups'] = L.layerGroup();
 
-    var clusters = L.markerClusterGroup();
+    window.clusters = L.markerClusterGroup();
     var testDate = new Date();
     testDate.setDate(testDate.getDate() - 2);
     $.each(spreadsheetData, function(data_type, elements) {
@@ -157,12 +164,25 @@ function startUpLeafet(spreadsheetData) {
 	    layerGroup.addLayer(layer);
 
 	}
+    });
+    
+    nextStepInMapSetup();
+};
+
+function fetchPublicDataSpreadsheets() {
+
+  var data_type = public_data_layer_queue.pop();
 
         if( public_data_layers[data_type] && (
             !layersToShow || $.inArray(data_type, layersToShow) !== -1 )) {
+
+            MAP_waiting += 1;
+            console.log(data_type, MAP_waiting, public_data_layers[data_type]);
+            
             Tabletop.init({
                 key: public_data_layers[data_type],
                 callback: function(public_data) { 
+                    console.log('fleem');
                     for( var i=0; i<public_data.length; ++i ) {
                         var public_row = public_data[i];
 
@@ -201,6 +221,7 @@ function startUpLeafet(spreadsheetData) {
                         clusters.removeLayers(layerGroup.getLayers());
                         clusters.addLayers(layerGroup.getLayers());
                     }
+                    --MAP_waiting;
                 },
                 simpleSheet: true,
                 debug: false,
@@ -208,9 +229,9 @@ function startUpLeafet(spreadsheetData) {
             });
         }
 
-    });
-    
-    
+};
+  
+function populateMap() {  
     var uiLayers = {};
     $.each(layers, function(i, n) {
         if( !layersToShow || ($.inArray(i, layersToShow) !== -1) ) {
@@ -257,7 +278,19 @@ function startUpLeafet(spreadsheetData) {
 
 };
 
-
+function nextStepInMapSetup() {
+  if( public_data_layer_queue && public_data_layer_queue.length ) {
+      if( MAP_waiting ) { 
+          window.setTimeout(nextStepInMapSetup, 500);
+          return false; 
+      } else {
+          fetchPublicDataSpreadsheets();
+          window.setTimeout(nextStepInMapSetup, 500);
+      }
+  } else {
+      populateMap();
+  }
+};
 
 // Toggle for 'About this map' and X buttons
 // Only visible on mobile
