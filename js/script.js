@@ -118,7 +118,9 @@ function startUpLeafet(spreadsheetData) {
     window.layers = {};
 
     // Initialize some layers by hand to force a certain display order
-    window.layers['Local Groups'] = L.layerGroup();
+    if( !args.notmainpage ) {
+        window.layers['Local Groups'] = L.layerGroup();
+    }
 
     window.clusters = L.markerClusterGroup();
     var testDate = new Date();
