@@ -224,6 +224,7 @@ function fetchPublicDataSpreadsheets() {
                         clusters.addLayers(layerGroup.getLayers());
                     }
                     --MAP_waiting;
+                    nextStepInMapSetup();
                 },
                 simpleSheet: true,
                 debug: false,
@@ -235,12 +236,14 @@ function fetchPublicDataSpreadsheets() {
   
 function populateMap() {  
     var uiLayers = {};
+console.log(layers);
     $.each(layers, function(i, n) {
         if( !layersToShow || ($.inArray(i, layersToShow) !== -1) ) {
           clusters.addLayers(n.getLayers());
           uiLayers[i] = L.layerGroup().addTo(map);
         }
     });
+console.log(uiLayers);
     clusters.addTo(map);
     if( layerControl ) {
         var _control = L.control.legendlayers(null, uiLayers, icons).addTo(map);
@@ -283,11 +286,10 @@ function populateMap() {
 function nextStepInMapSetup() {
   if( public_data_layer_queue && public_data_layer_queue.length ) {
       if( MAP_waiting ) { 
-          window.setTimeout(nextStepInMapSetup, 500);
+          window.setTimeout(nextStepInMapSetup, 200);
           return false; 
       } else {
           fetchPublicDataSpreadsheets();
-          window.setTimeout(nextStepInMapSetup, 500);
       }
   } else {
       populateMap();
