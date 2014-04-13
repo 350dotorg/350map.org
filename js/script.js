@@ -135,7 +135,6 @@ function startUpLeafet(spreadsheetData) {
                 continue;
             }
             var date = tabletopData[num].date;
-            console.log(data_type, hidePastEvents, date);
             if( hidePastEvents && date ) {
                 date = new Date(date);
                 if( !isNaN(date.getTime()) ) {
@@ -179,12 +178,10 @@ function fetchPublicDataSpreadsheets() {
             !layersToShow || $.inArray(data_type, layersToShow) !== -1 )) {
 
             MAP_waiting += 1;
-            console.log(data_type, MAP_waiting, public_data_layers[data_type]);
             
             Tabletop.init({
                 key: public_data_layers[data_type],
                 callback: function(public_data) { 
-                    console.log('fleem');
                     for( var i=0; i<public_data.length; ++i ) {
                         var public_row = public_data[i];
 
@@ -236,14 +233,12 @@ function fetchPublicDataSpreadsheets() {
   
 function populateMap() {  
     var uiLayers = {};
-console.log(layers);
     $.each(layers, function(i, n) {
         if( !layersToShow || ($.inArray(i, layersToShow) !== -1) ) {
           clusters.addLayers(n.getLayers());
           uiLayers[i] = L.layerGroup().addTo(map);
         }
     });
-console.log(uiLayers);
     clusters.addTo(map);
     if( layerControl ) {
         var _control = L.control.legendlayers(null, uiLayers, icons).addTo(map);
