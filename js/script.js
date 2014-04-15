@@ -125,7 +125,7 @@ function startUpLeafet(spreadsheetData) {
 
     window.clusters = L.markerClusterGroup();
     var testDate = new Date();
-    testDate.setDate(testDate.getDate() - 0.5);
+    testDate.setHours(testDate.getHours() - 12);
     $.each(spreadsheetData, function(data_type, elements) {
         if( data_type == "Markers" || data_type == "Layers" ) { return; }
         var tabletopData = elements.elements;
@@ -185,7 +185,7 @@ function fetchPublicDataSpreadsheets() {
                 callback: function(public_data) { 
 
                     var testDate = new Date();
-                    testDate.setDate(testDate.getDate() - 0.5);
+                    testDate.setHours(testDate.getHours() - 12);
 
                     for( var i=0; i<public_data.length; ++i ) {
                         var public_row = public_data[i];
