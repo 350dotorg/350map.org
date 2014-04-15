@@ -42,6 +42,7 @@ var lat = parseFloat(args.lat) || 0,
     layerControlAlwaysShown = args.lc !== "h",
     addMarkerControl = args.amc !== "n",
     hidePastEvents = args.hpe !== "n",
+    dateAttribute = args.dateAttr || "date",
     layersToShow = args.layer;
 var map = new L.Map('map', {"zoomControl": false, "maxZoom": 16}).setView([lat, lng], zoom);
 if( locate ) { map.locate({setView: true, maxZoom: 10}); }
@@ -124,7 +125,7 @@ function startUpLeafet(spreadsheetData) {
 
     window.clusters = L.markerClusterGroup();
     var testDate = new Date();
-    testDate.setDate(testDate.getDate() - 2);
+    testDate.setDate(testDate.getDate() - 0.5);
     $.each(spreadsheetData, function(data_type, elements) {
         if( data_type == "Markers" || data_type == "Layers" ) { return; }
         var tabletopData = elements.elements;
@@ -134,7 +135,7 @@ function startUpLeafet(spreadsheetData) {
             if( !dataLat || !dataLong || !parseFloat(dataLat) || !parseFloat(dataLong) ) {
                 continue;
             }
-            var date = tabletopData[num].date;
+            var date = tabletopData[num][dateAttribute];
             if( hidePastEvents && date ) {
                 date = new Date(date);
                 if( !isNaN(date.getTime()) ) {
@@ -182,6 +183,10 @@ function fetchPublicDataSpreadsheets() {
             Tabletop.init({
                 key: public_data_layers[data_type],
                 callback: function(public_data) { 
+
+                    var testDate = new Date();
+                    testDate.setDate(testDate.getDate() - 0.5);
+
                     for( var i=0; i<public_data.length; ++i ) {
                         var public_row = public_data[i];
 
@@ -189,7 +194,7 @@ function fetchPublicDataSpreadsheets() {
                             // @@TODO log it
                             continue;
                         }
-                        var date = public_row.date;
+                        var date = public_row[dateAttribute];
                         if( hidePastEvents && date ) {
                             date = new Date(date);
                             if( !isNaN(date.getTime()) ) {
