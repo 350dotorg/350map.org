@@ -43,7 +43,8 @@ var lat = parseFloat(args.lat) || 0,
     addMarkerControl = args.amc !== "n",
     hidePastEvents = args.hpe !== "n",
     dateAttribute = args.dateAttr || "date",
-    layersToShow = args.layer;
+    layersToShow = args.layer,
+    markerClusterRadius = parseInt(args.clusterRadius) || 80;
 var map = new L.Map('map', {"zoomControl": false, "maxZoom": 16}).setView([lat, lng], zoom);
 if( locate ) { map.locate({setView: true, maxZoom: 10}); }
 
@@ -123,7 +124,7 @@ function startUpLeafet(spreadsheetData) {
         window.layers['Local Groups'] = L.layerGroup();
     }
 
-    window.clusters = L.markerClusterGroup();
+    window.clusters = L.markerClusterGroup({markerClusterRadius: markerClusterRadius});
     var testDate = new Date();
     testDate.setHours(testDate.getHours() - 12);
     $.each(spreadsheetData, function(data_type, elements) {
