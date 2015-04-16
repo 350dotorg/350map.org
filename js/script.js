@@ -124,7 +124,7 @@ function startUpLeafet(spreadsheetData) {
         window.layers['Local Groups'] = L.layerGroup();
     }
 
-    window.clusters = L.markerClusterGroup({markerClusterRadius: markerClusterRadius});
+    window.clusters = L.markerClusterGroup({maxClusterRadius: markerClusterRadius});
     var testDate = new Date();
     testDate.setHours(testDate.getHours() - 12);
     $.each(spreadsheetData, function(data_type, elements) {
