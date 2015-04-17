@@ -35,7 +35,7 @@ window.getMegamapArgs = function() {
 var args = getMegamapArgs();
 
 if (args.css) {
-    var _x = document.creaeElement("link");
+    var _x = document.createElement("link");
     _x.rel = "stylesheet";
     _x.type = "text/css";
     _x.href = args.css;
