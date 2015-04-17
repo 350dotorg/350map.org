@@ -35,7 +35,7 @@ window.getMegamapArgs = function() {
 var args = getMegamapArgs();
 
 if (args.css) {
-    $("<link rel='stylesheet'>").attr("src" args.css).appendTo(document.body);
+    //$("<link rel='stylesheet'>").attr("src" args.css).appendTo(document.body);
 }
 
 var lat = parseFloat(args.lat) || 0,
