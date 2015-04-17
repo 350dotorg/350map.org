@@ -47,6 +47,7 @@ var lat = parseFloat(args.lat) || 0,
     markerClusterRadius = parseInt(args.clusterRadius) || 80;
 var map = new L.Map('map', {"zoomControl": false, "maxZoom": 16}).setView([lat, lng], zoom);
 if( locate ) { map.locate({setView: true, maxZoom: 10}); }
+map.scrollWheelZoom.disable();
 
 L.esri.basemapLayer("Streets").addTo(map);
 
