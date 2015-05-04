@@ -81,7 +81,7 @@ function initializeTabletopObject(dataSpreadsheet){
     	key: dataSpreadsheet,
     	callback: startUpLeafet,
     	debug: false,
-        proxy: "http://350dotorg.github.io/megamap-data"
+        proxy: "//350dotorg.github.io/megamap-data"
     });
 }
 
@@ -241,7 +241,7 @@ function fetchPublicDataSpreadsheets() {
                 },
                 simpleSheet: true,
                 debug: false,
-                proxy: "http://350dotorg.github.io/megamap-data"
+                proxy: "//350dotorg.github.io/megamap-data"
             });
         }
 
