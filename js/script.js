@@ -80,8 +80,8 @@ function initializeTabletopObject(dataSpreadsheet){
 	Tabletop.init({
     	key: dataSpreadsheet,
     	callback: startUpLeafet,
-    	debug: false
-        //proxy: "//ejucovy.github.io/megamap-data"
+    	debug: false,
+        proxy: "//350dotorg.github.io/megamap-data"
     });
 }
 
@@ -101,15 +101,15 @@ function startUpLeafet(spreadsheetData) {
 
     for( var i=0; i < spreadsheetData.Layers.elements.length; ++i ) {
         var row = spreadsheetData.Layers.elements[i];
-        if( row.Template ) {
-            templates[row.Type] = Handlebars.compile(row.Template);
+        if( row.template ) {
+            templates[row.type] = Handlebars.compile(row.template);
         }
-        if( row.PublicSubmissionForm ) {
-            form_templates[row.Type] = Handlebars.compile(row.PublicSubmissionForm);
+        if( row.publicsubmissionform ) {
+            form_templates[row.type] = Handlebars.compile(row.publicsubmissionform);
         }
-        if( row.PublicSubmissionSpreadsheet ) {
-            public_data_layer_queue.push(row.Type);
-            public_data_layers[row.Type] = row.PublicSubmissionSpreadsheet;
+        if( row.publicsubmissionspreadsheet ) {
+            public_data_layer_queue.push(row.type);
+            public_data_layers[row.type] = row.publicsubmissionspreadsheet;
         }
     }
 
@@ -240,8 +240,8 @@ function fetchPublicDataSpreadsheets() {
                     nextStepInMapSetup();
                 },
                 simpleSheet: true,
-                debug: false
-                //proxy: "//350dotorg.github.io/megamap-data"
+                debug: false,
+                proxy: "//350dotorg.github.io/megamap-data"
             });
         }
 
