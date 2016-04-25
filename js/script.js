@@ -106,7 +106,8 @@ function initializeTabletopObject(dataSpreadsheet) {
 // And plots on it on our map
 function startUpLeafet(spreadsheetData) {
 
-  var default_template = Handlebars.compile($("#handlebars_template").html());
+  var default_template = Handlebars.compile('<div class="popup_box"> <div class="popup_box_header"> <strong><a href="{{ website }}">{{ name }}</a></strong> </div> <em>{{ geom }}</em> <hr /> {{ description }} </div>');
+
   var templates = {};
   for (var i = 0; i < spreadsheetData.Layers.elements.length; ++i) {
     var row = spreadsheetData.Layers.elements[i];
