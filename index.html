@@ -48,7 +48,7 @@
         <!--[if lte IE 8]><link rel="stylesheet" href="markercluster/MarkerCluster.Default.ie.css" /><![endif]-->
 
         <script src="//cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js"></script>
-
+        
 
         <script src="geosearch/js/l.control.geosearch.js"></script>
         <script src="geosearch/js/l.geosearch.provider.google.js"></script>
@@ -67,6 +67,16 @@
 	<script type="text/javascript" src="js/tabletop.js"></script>
 	<script type="text/javascript" src="js/handlebars.js"></script>
 
+        <script id="handlebars_template" type="text/x-handlebars-template">
+          <div class="popup_box">
+            <div class="popup_box_header">
+              <strong><a href="{{ website }}">{{ name }}</a></strong>
+            </div>
+            <em>{{ geom }}</em>
+            <hr />
+            {{ description }}
+          </div>
+        </script>
 </head>
 <body>
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
@@ -79,6 +89,7 @@
 
 	<div id="map"></div>
 
-	<script data-spreadsheet="0Agcr__L1I1PDdEpoMnhxR0RHdkFsWlFtNTlEZlltR0E" src="js/script.js"></script>
+	<script data-spreadsheet="0Agcr__L1I1PDdEpoMnhxR0RHdkFsWlFtNTlEZlltR0E" 
+                src="js/script.js"></script>
 </body>
 </html>

@@ -1,7 +1,4 @@
-var form_templates = {};
-var public_data_layer_queue = [];
-
-var getMegamapArgs = function() {
+window.getMegamapArgs = function() {
   var argsStr = window.location.search.replace(/^\?/, '');
   var embedArgsStr = $("script[src='js/script.js']").data("map-args") || '';
 
@@ -93,12 +90,14 @@ function initializeTabletopObject(dataSpreadsheet){
 // It creates the marker, sets location
 // And plots on it on our map
 function startUpLeafet(spreadsheetData) {
-    var fallbackTemplate = '<div class="popup_box"> <div class="popup_box_header"> <strong><a href="{{ website }}">{{ name }}</a></strong> </div> <em>{{ geom }}</em> <hr /> {{ description }} </div>';
-    var default_template = Handlebars.compile($("#handlebars_template").html() || fallbackTemplate);
-    var templates = {};
-    var MAP_waiting = 0;
 
-    var public_data_layers = {};
+    window.default_template = Handlebars.compile($("#handlebars_template").html());
+    window.templates = {};
+    window.form_templates = {};
+    window.MAP_waiting = 0;
+
+    window.public_data_layers = {};
+    window.public_data_layer_queue = [];
 
     for( var i=0; i < spreadsheetData.Layers.elements.length; ++i ) {
         var row = spreadsheetData.Layers.elements[i];
@@ -118,7 +117,7 @@ function startUpLeafet(spreadsheetData) {
     window.icons = {};
     for( var i=0; i < spreadsheetData.Markers.elements.length; ++i ) {
         var row = spreadsheetData.Markers.elements[i];
-        icons[row.type] = L.icon({
+        icons[row.type] = L.icon({ 
             iconUrl: row.iconurl,
             iconSize: [parseInt(row.iconwidth), parseInt(row.iconheight)],
             iconAnchor: [parseInt(row.iconanchorx), parseInt(row.iconanchory)],
@@ -168,18 +167,18 @@ function startUpLeafet(spreadsheetData) {
             if( popup ) {
 	        layer.bindPopup(popup);
             }
-
+	
             var layerGroup = layers[data_type];
             if( typeof(layerGroup) === "undefined" ) {
                 layers[data_type] = layerGroup = L.layerGroup();
             }
-
+            
 	    // Add marker to our to map
 	    layerGroup.addLayer(layer);
 
 	}
     });
-
+    
     nextStepInMapSetup();
 };
 
@@ -191,10 +190,10 @@ function fetchPublicDataSpreadsheets() {
             !layersToShow || $.inArray(data_type, layersToShow) !== -1 )) {
 
             MAP_waiting += 1;
-
+            
             Tabletop.init({
                 key: public_data_layers[data_type],
-                callback: function(public_data) {
+                callback: function(public_data) { 
 
                     var testDate = new Date();
                     testDate.setHours(testDate.getHours() - 12);
@@ -226,12 +225,12 @@ function fetchPublicDataSpreadsheets() {
     	                var popup = (templates[data_type] || default_template)(public_row);
     	                // Add to our marker
 	                layer.bindPopup(popup);
-
+	                
                         var layerGroup = layers[data_type];
                         if( typeof(layerGroup) === "undefined" ) {
                             layers[data_type] = layerGroup = L.layerGroup();
                         }
-
+                        
 	                // Add marker to our to map
 	                layerGroup.addLayer(layer);
                         clusters.removeLayers(layerGroup.getLayers());
@@ -247,8 +246,8 @@ function fetchPublicDataSpreadsheets() {
         }
 
 };
-
-function populateMap() {
+  
+function populateMap() {  
     var uiLayers = {};
     $.each(layers, function(i, n) {
         if( !layersToShow || ($.inArray(i, layersToShow) !== -1) ) {
@@ -263,10 +262,10 @@ function populateMap() {
             $(_control._container).addClass("leaflet-control-layers-always-expanded");
         }
     }
-
+    
     if( addMarkerControl ) {
         var allowed = {}, numAllowed = 0;
-        $.each(uiLayers, function(i, n) {
+        $.each(uiLayers, function(i, n) { 
             if( form_templates[i] && public_data_layers[i] ) {
                 allowed[i] = n;
                 ++numAllowed;
@@ -297,9 +296,9 @@ function populateMap() {
 
 function nextStepInMapSetup() {
   if( public_data_layer_queue && public_data_layer_queue.length ) {
-      if( MAP_waiting ) {
+      if( MAP_waiting ) { 
           window.setTimeout(nextStepInMapSetup, 200);
-          return false;
+          return false; 
       } else {
           fetchPublicDataSpreadsheets();
       }
