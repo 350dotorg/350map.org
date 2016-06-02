@@ -1,0 +1,9 @@
+{
+  "name": "350map.org",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "express": "^4.13.4"
+  }
+}

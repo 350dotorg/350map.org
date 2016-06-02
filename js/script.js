@@ -86,8 +86,13 @@ new L.Control.GeoSearch({
 // First we'll initialize Tabletop with our spreadsheet
 var jqueryNoConflict = jQuery;
 jqueryNoConflict(document).ready(function() {
-  var root_spreadsheet = $("script[src='js/script.js']").data("spreadsheet");
+  var scriptTag = $("script[src='js/script.js']");
+  
+  var root_spreadsheet = scriptTag.data("spreadsheet");
+  var actionKitCampaigns = scriptTag.data("actionkit");
+  
   initializeTabletopObject(root_spreadsheet);
+  fetchActionKitData(actionKitCampaigns);
 });
 
 // Pull data from Google spreadsheet
