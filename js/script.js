@@ -92,7 +92,7 @@ jqueryNoConflict(document).ready(function() {
   var actionKitCampaigns = scriptTag.data("actionkit");
   
   initializeTabletopObject(root_spreadsheet);
-  fetchActionKitData(actionKitCampaigns);
+  fetchActionKitData(map, actionKitCampaigns);
 });
 
 // Pull data from Google spreadsheet
