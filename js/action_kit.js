@@ -1,7 +1,14 @@
 function fetchActionKitData(map, campaignsString) {
   var separator = '|';
   var campaignNames = campaignsString.split(separator);
-  var template = '<div class="popup_box"> <div class="popup_box_header"> <strong><a href="{{ website }}">{{ name }}</a></strong> </div> <em>{{ geom }}</em> <hr /> {{ description }} </div>';
+  var template =
+      '<div class="popup_box"> ' +
+        '<div class="popup_box_header"> ' +
+          '<strong><a href="{{ website }}">{{ name }}</a></strong> ' +
+          '</div> <em>{{ city }} {{ state }} {{country}}</em> <hr /> ' +
+          '{{ start_time }} <br> {{event_date}} <br><br> ' +
+          '{{ venue }} <br> {{ address }} <br> {{ city }} {{ state }} {{country}} <br><br>' +
+          '<strong><a href="{{ rsvp_url }}">RSVP</a></strong> </div>';
   var compiledTemplate = Handlebars.compile(template);
 
   campaignNames.forEach(function (campaign) {
