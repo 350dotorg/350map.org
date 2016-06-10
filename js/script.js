@@ -85,6 +85,8 @@ new L.Control.GeoSearch({
 // Here's the Tabletop feed
 // First we'll initialize Tabletop with our spreadsheet
 var jqueryNoConflict = jQuery;
+var eventGroups;
+
 jqueryNoConflict(document).ready(function() {
   var scriptTag = $("script[src='js/script.js']");
   
@@ -92,7 +94,7 @@ jqueryNoConflict(document).ready(function() {
   var actionKitCampaigns = scriptTag.data("actionkit");
   
   initializeTabletopObject(root_spreadsheet);
-  fetchActionKitData(map, actionKitCampaigns);
+  eventGroups = fetchActionKitData(map, actionKitCampaigns);
 });
 
 // Pull data from Google spreadsheet
@@ -271,6 +273,12 @@ function populateMap() {
       uiLayers[i] = L.layerGroup().addTo(map);
     }
   });
+  
+  eventGroups.forEach(function (event) {
+    clusters.addLayers(event["markers"].getLayers());  
+    uiLayers[event["eventName"]] = event["markers"].addTo(map);
+  });
+
   clusters.addTo(map);
   if (layerControl) {
     var _control = L.control.legendlayers(null, uiLayers, icons).addTo(map);

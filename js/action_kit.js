@@ -10,6 +10,7 @@ function fetchActionKitData(map, campaignsString) {
           '{{ venue }} <br> {{ address }} <br> {{ city }} {{ state }} {{country}} <br><br>' +
           '<strong><a href="{{ rsvp_url }}">RSVP</a></strong> </div>';
   var compiledTemplate = Handlebars.compile(template);
+  var layerGroups = [];
 
   campaignNames.forEach(function (campaign) {
     $.ajax({
@@ -26,10 +27,11 @@ function fetchActionKitData(map, campaignsString) {
               markers.addLayer(marker);
             }
           });
-          markers.addTo(map);
-          L.control.layers(null, {[campaign]: markers}, {collapsed: false}).addTo(map);
+          layerGroups.push({"eventName": campaign, "markers": markers});
         }
       }
     });
   });
+
+  return layerGroups;
 }
