@@ -85,16 +85,17 @@ new L.Control.GeoSearch({
 // Here's the Tabletop feed
 // First we'll initialize Tabletop with our spreadsheet
 var jqueryNoConflict = jQuery;
-var eventGroups;
 
 jqueryNoConflict(document).ready(function() {
   var scriptTag = $("script[src='js/script.js']");
   
   var root_spreadsheet = scriptTag.data("spreadsheet");
   var actionKitCampaigns = scriptTag.data("actionkit");
-  
-  initializeTabletopObject(root_spreadsheet);
-  eventGroups = fetchActionKitData(map, actionKitCampaigns);
+
+  fetchActionKitData(actionKitCampaigns, function(actionKitLayerGroups) {
+    $.extend(layers, actionKitLayerGroups);
+    initializeTabletopObject(root_spreadsheet);
+  });
 });
 
 // Pull data from Google spreadsheet
@@ -144,7 +145,6 @@ function startUpLeafet(spreadsheetData) {
   }
 
   // Initialize some layers by hand to force a certain display order
-
   if (!args.notmainpage) {
     layers['Local Groups'] = L.layerGroup();
   }
@@ -201,10 +201,9 @@ function startUpLeafet(spreadsheetData) {
   });
 
   nextStepInMapSetup();
-};
+}
 
 function fetchPublicDataSpreadsheets() {
-
   var data_type = public_data_layer_queue.pop();
 
   if (public_data_layers[data_type] && (!layersToShow || $.inArray(data_type, layersToShow) !== -1)) {
@@ -263,7 +262,7 @@ function fetchPublicDataSpreadsheets() {
     });
   }
 
-};
+}
 
 function populateMap() {
   var uiLayers = {};
@@ -272,11 +271,6 @@ function populateMap() {
       clusters.addLayers(n.getLayers());
       uiLayers[i] = L.layerGroup().addTo(map);
     }
-  });
-  
-  eventGroups.forEach(function (event) {
-    clusters.addLayers(event["markers"].getLayers());  
-    uiLayers[event["eventName"]] = event["markers"].addTo(map);
   });
 
   clusters.addTo(map);
@@ -324,7 +318,7 @@ function populateMap() {
     })).fire("click");
   });
 
-};
+}
 
 function nextStepInMapSetup() {
   if (public_data_layer_queue && public_data_layer_queue.length) {
@@ -337,7 +331,7 @@ function nextStepInMapSetup() {
   } else {
     populateMap();
   }
-};
+}
 
 // Toggle for 'About this map' and X buttons
 // Only visible on mobile

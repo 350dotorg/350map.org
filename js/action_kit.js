@@ -1,4 +1,4 @@
-function fetchActionKitData(map, campaignsString) {
+function fetchActionKitData(campaignsString, callback) {
   var separator = '|';
   var campaignNames = campaignsString.split(separator);
   var template =
@@ -10,10 +10,11 @@ function fetchActionKitData(map, campaignsString) {
           '{{ venue }} <br> {{ address }} <br> {{ city }} {{ state }} {{country}} <br><br>' +
           '<strong><a href="{{ rsvp_url }}">RSVP</a></strong> </div>';
   var compiledTemplate = Handlebars.compile(template);
-  var layerGroups = [];
+  var layerGroups = {};
+  var ajaxRequests = [];
 
-  campaignNames.forEach(function (campaign) {
-    $.ajax({
+  campaignNames.forEach(function(campaign) {
+    ajaxRequests.push($.ajax({
       url: 'https://act.350.org/event/' + campaign + '?template_set=json_nearby_events&jsonp=?',
       dataType: 'jsonp',
       success: function (data) {
@@ -21,17 +22,18 @@ function fetchActionKitData(map, campaignsString) {
         if (data.events) {
           data.events.forEach(function (event) {
             if (event.latitude && event.longitude) {
-              console.log(event);
               var marker = L.marker([event.latitude, event.longitude]);
               marker.bindPopup(compiledTemplate(event));
               markers.addLayer(marker);
             }
           });
-          layerGroups.push({"eventName": campaign, "markers": markers});
+          layerGroups[campaign] = markers;
         }
       }
-    });
+    }));
   });
 
-  return layerGroups;
+  $.when.apply($, ajaxRequests).done(function() {
+    callback(layerGroups);
+  });
 }
