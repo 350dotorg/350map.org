@@ -1,4 +1,9 @@
 function fetchActionKitData(campaignsString, callback) {
+  if (!campaignsString) {
+    callback({});
+    return;
+  }
+
   var separator = '|';
   var campaigns = campaignsString.split(separator);
   var template =
