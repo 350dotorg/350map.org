@@ -94,6 +94,9 @@ jqueryNoConflict(document).ready(function() {
 
   fetchActionKitData(actionKitCampaigns, function(actionKitLayerGroups) {
     $.extend(layers, actionKitLayerGroups);
+    Object.keys(layers).forEach(function(campaignName) {
+      icons[campaignName] = getEventIcon();
+    });
     initializeTabletopObject(root_spreadsheet);
   });
 });
@@ -274,6 +277,7 @@ function populateMap() {
   });
 
   clusters.addTo(map);
+
   if (layerControl) {
     var _control = L.control.legendlayers(null, uiLayers, icons).addTo(map);
     if (layerControlAlwaysShown) {
