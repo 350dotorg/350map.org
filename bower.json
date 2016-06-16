@@ -22,8 +22,8 @@
     "leaflet-geosearch": "^1.1.0",
     "leaflet.markercluster": "^0.5.0",
     "handlebars": "^4.0.5",
-    "bootstrap": "^3.3.6",
-    "jquery": "^2.2.4",
+    "bootstrap-css": "~2.3.1",
+    "jquery": "~2.2.4",
     "esri-leaflet": "^2.0.0"
   },
   "resolutions": {
