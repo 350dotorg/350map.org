@@ -17,7 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "tabletop": "~1.4.3",
+    "tabletop": "1.4.0",
     "leaflet": "~0.7.7",
     "leaflet-geosearch": "~1.1.0",
     "leaflet.markercluster": "~0.5.0",
@@ -25,5 +25,8 @@
     "bootstrap-css": "~2.3.1",
     "jquery": "~2.2.4",
     "esri-leaflet": "~1.0.3"
+  },
+  "resolutions": {
+    "leaflet": "~0.7.7"
   }
 }
