@@ -24,7 +24,8 @@
     "handlebars": "~4.0.5",
     "bootstrap-css": "~2.3.1",
     "jquery": "~2.2.4",
-    "esri-leaflet": "~1.0.3"
+    "esri-leaflet": "~1.0.3",
+    "moment": "~2.13.0"
   },
   "resolutions": {
     "leaflet": "~0.7.7"
