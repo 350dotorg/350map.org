@@ -28,7 +28,7 @@ function fetchActionKitData(campaignsString, callback) {
         if (data.events) {
           data.events.forEach(function(event) {
             if (event.latitude && event.longitude) {
-              var marker = L.marker([event.latitude, event.longitude]);
+              var marker = L.marker([event.latitude, event.longitude], {icon: getEventIcon()});
               marker.bindPopup(compiledTemplate(event));
               markers.addLayer(marker);
             }
@@ -42,4 +42,5 @@ function fetchActionKitData(campaignsString, callback) {
   $.when.apply($, actionKitRequests).done(function() {
     callback(layerGroups);
   });
+
 }
