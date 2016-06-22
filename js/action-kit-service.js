@@ -9,10 +9,10 @@ function fetchActionKitData(campaignsString, callback) {
   var template =
     '<div class="popup_box"> ' +
     '<div class="popup_box_header"> ' +
-    '<strong><a href="{{ website }}">{{ name }}</a></strong> ' +
-    '</div> <em>{{ city }} {{ state }} {{country}}</em> <hr /> ' +
-    '{{ start_time }} <br> {{event_date}} <br><br> ' +
-    '{{ venue }} <br> {{ address }} <br> {{ city }} {{ state }} {{country}} <br><br>' +
+    '<strong><a href="{{ rsvp_url }}">{{ name }}</a></strong> ' +
+    '</div> <em>{{ city }}{{#if state }}, {{/if }}{{ state }}{{#if country }},{{/if }} {{ country }}</em> <hr /> ' +
+    '{{ start_time }} <br> {{ event_date }} <br><br> ' +
+    '{{ venue }} <br> {{ address }} <br> {{ city }}{{#if state }}, {{/if }}{{ state }}{{#if country }},{{/if }} {{ country }} <br><br>' +
     '<strong><a href="{{ rsvp_url }}">RSVP</a></strong> </div>';
   var compiledTemplate = Handlebars.compile(template);
   var layerGroups = {};
@@ -29,6 +29,8 @@ function fetchActionKitData(campaignsString, callback) {
           data.events.forEach(function(event) {
             if (event.latitude && event.longitude) {
               var marker = L.marker([event.latitude, event.longitude], {icon: getEventIcon()});
+              event.start_time = moment(event.start_time, 'H:mm:ss').format("h:mma");
+              event.event_date = moment(event.event_date).format("MMMM D, YYYY");
               marker.bindPopup(compiledTemplate(event));
               markers.addLayer(marker);
             }
