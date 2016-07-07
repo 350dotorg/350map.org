@@ -199,7 +199,7 @@ L.Control.LegendLayers = L.Control.extend({
                             image.style.width = (icon.iconSize[0] * 0.7) + "px";
                             image.style.height = (icon.iconSize[1] * 0.7) + "px";
                         } else {
-                            image.src = "//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-icon-2x.png"
+                            image.src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-icon-2x.png";
                             image.style.width = (25 * 0.7) + "px";
                             image.style.height = (41 * 0.7) + "px";
                         }

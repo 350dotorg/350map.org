@@ -1,95 +1,79 @@
 <!doctype html>
 <html lang="en">
+
 <head prefix="og: http://wcfcourier.com/app/special/tabletop_to_leaflet/">
-<head>
-<head>
-	<title>350.org Megamap</title>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+  <title>350.org Megamap</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-    <!-- Mobile meta tags-->
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<meta name="MobileOptimized" content="320"/>
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta http-equiv="cleartype" content="on">
+  <!-- Mobile meta tags-->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="cleartype" content="on">
 
-	<!-- Facebook meta tags-->
-	<meta property="og:title" content="350 Mega Map"/>
-	<meta property="og:type" content="website"/>
-	<meta property="og:url" content="http://map.350.org/"/>
-	<meta property="og:image" content="http://350.org/sites/all/themes/threefifty/logo.gif"/>
-	<meta property="og:site_name" content="350 Mega Map"/>
-	<meta property="og:description" content="Mapping a variety of local 350 groups, events and climate actions around the world." />
+  <!-- Facebook meta tags-->
+  <meta property="og:title" content="350 Mega Map" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://map.350.org/" />
+  <meta property="og:image" content="http://350.org/sites/all/themes/threefifty/logo.gif" />
+  <meta property="og:site_name" content="350 Mega Map" />
+  <meta property="og:description" content="Mapping a variety of local 350 groups, events and climate actions around the world." />
 
-	<!-- Twitter meta tags -->
-	<meta property="twitter:site" content="@350">
-	<meta property="twitter:card" content="350 Mega Map">
-	<meta property="twitter:url" content="http://map.350.org">
-	<meta property="twitter:title" content="350 Mega Map">
-	<meta property="twitter:description" content="Mapping a variety of local 350 groups, events and climate actions around the world.">
-	<meta property="twitter:image" content="http://350.org/sites/all/themes/threefifty/logo.gif">
+  <!-- Twitter meta tags -->
+  <meta property="twitter:site" content="@350">
+  <meta property="twitter:card" content="summary">
+  <meta property="twitter:url" content="http://map.350.org">
+  <meta property="twitter:title" content="350 Mega Map">
+  <meta property="twitter:description" content="Mapping a variety of local 350 groups, events and climate actions around the world.">
+  <meta property="twitter:image" content="http://350.org/sites/all/themes/threefifty/logo.gif">
 
-        <link rel="stylesheet" href="css/leaflet.css" />
-        <!--[if lte IE 8]>
-            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.ie.css" />
-            <![endif]-->
-            <!--[if IE]>
-            <style type="text/css">.leaflet-top { top: 60px; }</style>
-            <![endit]-->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+  <link rel="stylesheet" href="css/leaflet.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.ie.css" /><![endif]-->
+  <!--[if IE]><style type="text/css">.leaflet-top { top: 60px; }</style><![endif]-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
 
-	<!-- Javascript -->
-	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+  <!-- Javascript -->
+  <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 
-        <script type="text/javascript" src="markercluster/leaflet.markercluster.js"></script>
-        <link rel="stylesheet" href="markercluster/MarkerCluster.css" />
-        <link rel="stylesheet" href="markercluster/MarkerCluster.Default.css" />
-        <!--[if lte IE 8]><link rel="stylesheet" href="markercluster/MarkerCluster.Default.ie.css" /><![endif]-->
+  <script type="text/javascript" src="markercluster/leaflet.markercluster.js"></script>
+  <link rel="stylesheet" href="markercluster/MarkerCluster.css" />
+  <link rel="stylesheet" href="markercluster/MarkerCluster.Default.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="markercluster/MarkerCluster.Default.ie.css" /><![endif]-->
 
-        <script src="//cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js"></script>
-        
+  <script src="https://cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js"></script>
 
-        <script src="geosearch/js/l.control.geosearch.js"></script>
-        <script src="geosearch/js/l.geosearch.provider.google.js"></script>
-        <link rel="stylesheet" href="geosearch/css/l.geosearch.css" />
+  <script src="geosearch/js/l.control.geosearch.js"></script>
+  <script src="geosearch/js/l.geosearch.provider.google.js"></script>
+  <link rel="stylesheet" href="geosearch/css/l.geosearch.css" />
 
-        <script src="addmarker/Control.AddMarker.js"></script>
-        <link rel="stylesheet" href="addmarker/addmarker.css" />
-        <!--[if lte IE 8]><link rel="stylesheet" href="addmarker/addmarker.ie.css" /><![endif]-->
+  <script src="addmarker/Control.AddMarker.js"></script>
+  <link rel="stylesheet" href="addmarker/addmarker.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="addmarker/addmarker.ie.css" /><![endif]-->
 
-        <script src="js/leaflet.control.legendlayers.js"></script>
+  <script src="js/leaflet.control.legendlayers.js"></script>
 
-	<link rel="stylesheet" href="css/bootstrap.min.css" />
-	<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
-	<link rel="stylesheet" href="//s3.amazonaws.com/s3.350.org/images/350-megamap-style.css" />
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+  <link rel="stylesheet" href="https://s3.amazonaws.com/s3.350.org/images/350-megamap-style.css" />
 
-	<script type="text/javascript" src="js/tabletop.js"></script>
-	<script type="text/javascript" src="js/handlebars.js"></script>
-
-        <script id="handlebars_template" type="text/x-handlebars-template">
-          <div class="popup_box">
-            <div class="popup_box_header">
-              <strong><a href="{{ website }}">{{ name }}</a></strong>
-            </div>
-            <em>{{ geom }}</em>
-            <hr />
-            {{ description }}
-          </div>
-        </script>
+  <script type="text/javascript" src="js/tabletop.js"></script>
+  <script type="text/javascript" src="js/handlebars.js"></script>
 </head>
+
 <body>
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+  <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 
-    <noscript>
-		<div id="noscript_note">
-			You must have JavaScript enabled to view this page.
-		</div>
-	</noscript>
+  <noscript>
+    <div id="noscript_note">
+        You must have JavaScript enabled to view this page.
+    </div>
+  </noscript>
 
-	<div id="map"></div>
+  <div id="map"></div>
 
-	<script data-spreadsheet="0Agcr__L1I1PDdEpoMnhxR0RHdkFsWlFtNTlEZlltR0E" 
-                src="js/script.js"></script>
+  <script data-spreadsheet="0Agcr__L1I1PDdEpoMnhxR0RHdkFsWlFtNTlEZlltR0E" src="js/script.js"></script>
 </body>
+
 </html>
