@@ -1,4 +1,5 @@
-Tabletop to Leaflet
+350.org Megamap
+
 ===========
 * [Live demo](http://wcfcourier.com/app/special/tabletop_to_leaflet)
 
