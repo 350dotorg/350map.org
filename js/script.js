@@ -30,7 +30,7 @@ var getMegamapArgs = function() {
     }
   }
   return args;
-}
+};
 
 var args = getMegamapArgs();
 

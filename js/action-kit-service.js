@@ -20,7 +20,7 @@ function fetchActionKitData(campaignsString, callback) {
 
   campaigns.forEach(function(campaign) {
     actionKitRequests.push($.ajax({
-      url: 'https://act.350.org/event/' + campaign + '?template_set=json_nearby_events&jsonp=?',
+      url: config.actionKitUrl + campaign + '?template_set=json_nearby_events&jsonp=?',
       dataType: 'jsonp',
       success: function (data) {
         var markers = L.layerGroup();
