@@ -88,11 +88,9 @@ var jqueryNoConflict = jQuery;
 
 jqueryNoConflict(document).ready(function() {
   var scriptTag = $("script[src='js/script.js']");
-  
   var root_spreadsheet = scriptTag.data("spreadsheet");
-  var actionKitCampaigns = scriptTag.data("actionkit");
 
-  fetchActionKitData(actionKitCampaigns, function(actionKitLayerGroups) {
+  fetchActionKitData(args.actionkit, function(actionKitLayerGroups) {
     $.extend(layers, actionKitLayerGroups);
     Object.keys(layers).forEach(function(campaignName) {
       icons[campaignName] = getEventIcon();
