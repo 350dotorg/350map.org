@@ -9,7 +9,7 @@ function fetchActionKitData(campaignsString, callback) {
   var template =
     '<div class="popup_box"> ' +
     '<div class="popup_box_header"> ' +
-    '<strong><a href="{{ rsvp_url }}">{{ name }}</a></strong> ' +
+    '<strong><a target="_blank" href="{{ rsvp_url }}">{{ name }}</a></strong> ' +
     '</div> <em>{{ city }}{{#if state }}, {{/if }}{{ state }}{{#if country }},{{/if }} {{ country }}</em> <hr /> ' +
     '{{ start_time }} <br> {{ event_date }} <br><br> ' +
     '{{ venue }} <br> {{ address }} <br> {{ city }}{{#if state }}, {{/if }}{{ state }}{{#if country }},{{/if }} {{ country }} <br><br>' +
