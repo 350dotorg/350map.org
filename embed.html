@@ -27,6 +27,8 @@
             <dt>amc=n</dt><dd>if you add this, the "add new marker" control will be disabled, so the user cannot submit new markers to be added to the map</dd>
             <dt>hpe=n</dt><dd>If you add this, the map will not hide past events.  By default, any object with a "date" field will only appear if the date is within two days of the current date and time.</dd></dt>
             <dt>layer</dt><dd>Which layer(s) to install on the map.  If left blank, all available layers will be used.  If one or more ?layer parameters are provided, then only those layers will be displayed.  For example, "?layer=GROW Divestment Events&lc=n" would provide a map that only shows GROW Divestment Events (and disables the layer-toggling control since only one layer exists).  "?layer=GROW Divestment Events&layer=Local Groups" would show all GROW Divestment Events and Local Groups, but no other layers.  Note that the parameter(s) must match the layer names in the spreadsheet exactly, including spacing and capitalization.</dd>
+            <dt>actionkit</dt><dd>Which ActionKit campaigns to install on the map. Each campaign gets its own layer. Separate campaigns with a "|". For example, if you want to show <a href="https://act.350.org/event/break-free-world/?template_set=json_nearby_events&jsonp=myCallbackFunctionName">Break Free World</a> and
+            <a href="https://act.350.org/event/peoples-climate-plan-actions/?template_set=json_nearby_events&jsonp=myCallbackFunctionName">People's Climate Plan Actions</a>, it would look like this: data-map-args="actionkit=peoples-climate-plan-actions|break-free-world"</dd>
           </dl>
         </div>
         <div class="span10">

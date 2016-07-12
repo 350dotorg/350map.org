@@ -30,7 +30,7 @@ var getMegamapArgs = function() {
     }
   }
   return args;
-}
+};
 
 var args = getMegamapArgs();
 
@@ -85,9 +85,18 @@ new L.Control.GeoSearch({
 // Here's the Tabletop feed
 // First we'll initialize Tabletop with our spreadsheet
 var jqueryNoConflict = jQuery;
+
 jqueryNoConflict(document).ready(function() {
-  var root_spreadsheet = $("script[src='js/script.js']").data("spreadsheet");
-  initializeTabletopObject(root_spreadsheet);
+  var scriptTag = $("script[src='js/script.js']");
+  var root_spreadsheet = scriptTag.data("spreadsheet");
+
+  fetchActionKitData(args.actionkit, function(actionKitLayerGroups) {
+    $.extend(layers, actionKitLayerGroups);
+    Object.keys(layers).forEach(function(campaignName) {
+      icons[campaignName] = getEventIcon();
+    });
+    initializeTabletopObject(root_spreadsheet);
+  });
 });
 
 // Pull data from Google spreadsheet
@@ -137,7 +146,6 @@ function startUpLeafet(spreadsheetData) {
   }
 
   // Initialize some layers by hand to force a certain display order
-
   if (!args.notmainpage) {
     layers['Local Groups'] = L.layerGroup();
   }
@@ -194,10 +202,9 @@ function startUpLeafet(spreadsheetData) {
   });
 
   nextStepInMapSetup();
-};
+}
 
 function fetchPublicDataSpreadsheets() {
-
   var data_type = public_data_layer_queue.pop();
 
   if (public_data_layers[data_type] && (!layersToShow || $.inArray(data_type, layersToShow) !== -1)) {
@@ -256,7 +263,7 @@ function fetchPublicDataSpreadsheets() {
     });
   }
 
-};
+}
 
 function populateMap() {
   var uiLayers = {};
@@ -266,7 +273,9 @@ function populateMap() {
       uiLayers[i] = L.layerGroup().addTo(map);
     }
   });
+
   clusters.addTo(map);
+
   if (layerControl) {
     var _control = L.control.legendlayers(null, uiLayers, icons).addTo(map);
     if (layerControlAlwaysShown) {
@@ -311,7 +320,7 @@ function populateMap() {
     })).fire("click");
   });
 
-};
+}
 
 function nextStepInMapSetup() {
   if (public_data_layer_queue && public_data_layer_queue.length) {
@@ -324,7 +333,7 @@ function nextStepInMapSetup() {
   } else {
     populateMap();
   }
-};
+}
 
 // Toggle for 'About this map' and X buttons
 // Only visible on mobile
