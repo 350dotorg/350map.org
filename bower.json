@@ -1,13 +1,11 @@
 {
   "name": "350map.org",
-  "description": "",
-  "main": "",
   "authors": [
+    "350.org",
     "ThoughtWorks"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/thoughtworks/350map.org",
-  "moduleType": [],
+  "homepage": "https://github.com/350dotorg/350map.org",
   "private": true,
   "ignore": [
     "**/.*",
