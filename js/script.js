@@ -66,7 +66,7 @@ var map = new L.Map('map', {
   "zoomControl": false,
   "maxZoom": 16
 }).setView([lat, lng], zoom);
-if(locate) {
+if (locate) {
   map.locate({
     setView: true,
     maxZoom: 10
@@ -106,7 +106,7 @@ function initializeTabletopObject(dataSpreadsheet) {
     key: dataSpreadsheet,
     callback: startUpLeafet,
     debug: false
-      //proxy: "//ejucovy.github.io/megamap-data"
+    //proxy: "//ejucovy.github.io/megamap-data"
   });
 }
 // This function gets our data from our spreadsheet
@@ -259,7 +259,7 @@ function fetchPublicDataSpreadsheets() {
       },
       simpleSheet: true,
       debug: false
-        //proxy: "//350dotorg.github.io/megamap-data"
+      //proxy: "//350dotorg.github.io/megamap-data"
     });
   }
 
@@ -277,10 +277,11 @@ function populateMap() {
   clusters.addTo(map);
 
   if (layerControl) {
-    var _control = L.control.legendlayers(null, uiLayers, icons).addTo(map);
-    if (layerControlAlwaysShown) {
-      $(_control._container).addClass("leaflet-control-layers-always-expanded");
-    }
+    var options = {
+      collapsed: !layerControlAlwaysShown
+    };
+
+    var _control = L.control.legendlayers(null, uiLayers, icons, options).addTo(map);
   }
 
   if (addMarkerControl) {
