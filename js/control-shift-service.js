@@ -8,6 +8,16 @@ function fetchControlShiftData(categoriesString, callback) {
   var categorySeparator = '|';
   var categories = categoriesString.split(categorySeparator);
   
+  var template =
+    '<div class="popup_box"> ' +
+    '<div class="popup_box_header"> ' +
+    '<strong><a target="_blank" href="{{ url }}">{{ title }}</a></strong> ' +
+    '</div> <em>{{ who }}<br>' +
+    '<br> {{ what }} <br><br> ' +
+    '{{ signature_count }} out of {{ goal }} signatures' +
+    '</div>';
+  var compiledTemplate = Handlebars.compile(template);
+  
   var layerGroups = {};
   var controlShiftRequests = [];
 
@@ -20,7 +30,6 @@ function fetchControlShiftData(categoriesString, callback) {
       url: requestUrl,
       dataType: 'jsonp',
       success: function (data) {
-        console.log(data);
         var markers = L.layerGroup();
         var categoryName = data.name || category;
         if (data.results) {
@@ -30,7 +39,7 @@ function fetchControlShiftData(categoriesString, callback) {
               if (location.latitude && location.longitude) {
                 var marker = L.marker([location.latitude, location.longitude], {icon: getEventIcon()});
                 console.log("Marker Created! " + category + " LAT=" + location.latitude + " LON=" + location.longitude);
-                // marker.bindPopup(compiledTemplate(event));
+                marker.bindPopup(compiledTemplate(petition));
                 markers.addLayer(marker);
               }
             }
