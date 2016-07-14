@@ -95,8 +95,16 @@ jqueryNoConflict(document).ready(function() {
     Object.keys(layers).forEach(function(campaignName) {
       icons[campaignName] = getEventIcon();
     });
-    initializeTabletopObject(root_spreadsheet);
   });
+
+  fetchControlShiftData(args.controlshift, function(controlShiftLayerGroups) {
+    $.extend(layers, controlShiftLayerGroups);
+    Object.keys(layers).forEach(function(category) {
+      icons[category] = getEventIcon();
+    });
+  });
+
+  initializeTabletopObject(root_spreadsheet);
 });
 
 // Pull data from Google spreadsheet
