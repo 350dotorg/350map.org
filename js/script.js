@@ -95,16 +95,16 @@ jqueryNoConflict(document).ready(function() {
     Object.keys(actionKitLayerGroups).forEach(function(campaignName) {
       icons[campaignName] = getEventIcon();
     });
-  });
 
-  fetchControlShiftData(args.controlshift, function(controlShiftLayerGroups) {
-    $.extend(layers, controlShiftLayerGroups);
-    Object.keys(controlShiftLayerGroups).forEach(function(category) {
-      icons[category] = getPetitionIcon();
+    fetchControlShiftData(args.controlshift, function(controlShiftLayerGroups) {
+      $.extend(layers, controlShiftLayerGroups);
+      Object.keys(controlShiftLayerGroups).forEach(function(category) {
+        icons[category] = getPetitionIcon();
+      });
+
+      initializeTabletopObject(root_spreadsheet);
     });
   });
-
-  initializeTabletopObject(root_spreadsheet);
 });
 
 // Pull data from Google spreadsheet

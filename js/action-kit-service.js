@@ -45,4 +45,5 @@ function fetchActionKitData(campaignsString, callback) {
     callback(layerGroups);
   });
 
+  return $.Deferred().promise();
 }
