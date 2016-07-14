@@ -4,3 +4,10 @@ function getEventIcon() {
 	  iconSize: [32, 36]
 	});
 }
+
+function getPetitionIcon() {
+	return L.icon({
+	  iconUrl: 'js/images/petition-icon.png',
+	  iconSize: [32, 36]
+	});
+}

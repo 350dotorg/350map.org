@@ -37,7 +37,7 @@ function fetchControlShiftData(categoriesString, callback) {
             if (petition.location) {
               var location = petition.location;
               if (location.latitude && location.longitude) {
-                var marker = L.marker([location.latitude, location.longitude], {icon: getEventIcon()});
+                var marker = L.marker([location.latitude, location.longitude], {icon: getPetitionIcon()});
                 console.log("Marker Created! " + category + " LAT=" + location.latitude + " LON=" + location.longitude);
                 marker.bindPopup(compiledTemplate(petition));
                 markers.addLayer(marker);

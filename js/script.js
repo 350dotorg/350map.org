@@ -92,15 +92,15 @@ jqueryNoConflict(document).ready(function() {
 
   fetchActionKitData(args.actionkit, function(actionKitLayerGroups) {
     $.extend(layers, actionKitLayerGroups);
-    Object.keys(layers).forEach(function(campaignName) {
+    Object.keys(actionKitLayerGroups).forEach(function(campaignName) {
       icons[campaignName] = getEventIcon();
     });
   });
 
   fetchControlShiftData(args.controlshift, function(controlShiftLayerGroups) {
     $.extend(layers, controlShiftLayerGroups);
-    Object.keys(layers).forEach(function(category) {
-      icons[category] = getEventIcon();
+    Object.keys(controlShiftLayerGroups).forEach(function(category) {
+      icons[category] = getPetitionIcon();
     });
   });
 
