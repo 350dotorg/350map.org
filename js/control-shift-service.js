@@ -7,56 +7,49 @@ function fetchControlShiftData(categoriesString, callback) {
   var urlSeparator = ':';
   var categorySeparator = '|';
   var categories = categoriesString.split(categorySeparator);
-  
+
   var template =
-    '<div class="popup_box"> ' +
-    '<div class="popup_box_header"> ' +
-    '<strong><a target="_blank" href="{{ url }}">{{ title }}</a></strong> ' +
-    '</div> <em>{{ who }}<br>' +
-    '<br> {{ what }} <br><br> ' +
+    '<div class="popup_box">' +
+    '<div class="popup_box_header">' +
+    '<strong><a target="_blank" href="{{ url }}">{{ title }}</a></strong>' +
+    '</div><div><em>{{ location.query }}</em></div><hr />' +
+    '{{ who }}<br><br>' +
+    '{{ what }} <br><br>' +
     '{{ signature_count }} out of {{ goal }} signatures' +
     '</div>';
   var compiledTemplate = Handlebars.compile(template);
-  
+
+  var firstPageRequests = [];
+  var allPageRequests = [];
+  var categoryPageNumberMap = {};
   var layerGroups = {};
-  var controlShiftRequests = [];
-  var pagesPromises = [];
-  var categoriesPages = {};
 
   categories.forEach(function(categoryInfo) {
-    var totalPages = 1;
     var domain = categoryInfo.split(urlSeparator)[0];
     var category = categoryInfo.split(urlSeparator)[1];
-    
-    pagesPromises.push($.ajax({
-      url: 'https://' + domain + '/categories/' + category + '.json',
+
+    firstPageRequests.push($.ajax({
+      url: getControlShiftUrl(domain, category, 1),
       dataType: 'jsonp',
-      success: function (data) {
-        totalPages = data.total_pages;
-        categoriesPages[categoryInfo] = totalPages;
+      success: function(data) {
+        categoryPageNumberMap[categoryInfo] = data.total_pages;
       }
     }));
   });
 
-  $.when.apply($, pagesPromises).done(function() {
+  $.when.apply($, firstPageRequests).done(function() {
     categories.forEach(function(categoryInfo) {
-
       var domain = categoryInfo.split(urlSeparator)[0];
       var category = categoryInfo.split(urlSeparator)[1];
+      var totalPages = categoryPageNumberMap[categoryInfo];
 
-      var totalPages = categoriesPages[categoryInfo];
-      
-      for (var i = 1 ; i <= totalPages ; i++) {
-        if (i == 3 && category == "fossil-fuel-divestment-cities-states") continue; // This request causes a JSON parse error: 
-        // https://campaigns.gofossilfree.org/categories/fossil-fuel-divestment-cities-states.json?page=3
-        // For more information on the error: http://stackoverflow.com/questions/2965293/javascript-parse-error-on-u2028-unicode-character
+      for (var i = 1; i <= totalPages; i++) {
+        var requestUrl = getControlShiftUrl(domain, category, i);
 
-        var requestUrl = 'https://' + domain + '/categories/' + category + '.json?page=' + i;
-
-        controlShiftRequests.push($.ajax({
+        allPageRequests.push($.ajax({
           url: requestUrl,
           dataType: 'jsonp',
-          success: function (data) {
+          success: function(data) {
             var markers = L.layerGroup();
             var categoryName = data.name || category;
             if (data.results) {
@@ -69,17 +62,20 @@ function fetchControlShiftData(categoriesString, callback) {
                     markers.addLayer(marker);
                   }
                 }
-              })
+              });
               layerGroups[categoryName] = markers;
             }
           }
         }))
       }
-    })
+    });
 
-    $.when.apply($, controlShiftRequests).done(function() {
+    $.when.apply($, allPageRequests).done(function() {
       callback(layerGroups);
     });
   });
-        
+
+  function getControlShiftUrl(domain, category, page) {
+    return 'https://' + domain + '/categories/' + category + '.json?page=' + page;
+  }
 }
