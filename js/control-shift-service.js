@@ -68,9 +68,9 @@ function createCampaignMarkers(data) {
   var markers;
 
   if (layerGroups[categoryName]) {
-   markers = layerGroups[categoryName];
+    markers = layerGroups[categoryName];
   } else {
-   markers = L.layerGroup();
+    markers = L.layerGroup();
   }
 
   if (data.results) {
@@ -95,9 +95,10 @@ function createCampaignMarkers(data) {
 
 function renderMarkers(callback) {
   $.when.apply($, allPageRequests).done(function() {
-      callback(layerGroups);
-    });
+    callback(layerGroups);
+  });
 }
+
 function getControlShiftUrl(domain, category, page) {
   return 'https://' + domain + '/categories/' + category + '.json?page=' + page;
 }
