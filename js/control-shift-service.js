@@ -7,6 +7,7 @@ function fetchControlShiftData(categoriesString, callback) {
   var urlSeparator = ':';
   var categorySeparator = '|';
   var categories = categoriesString.split(categorySeparator);
+  var characterLimit = 200;
 
   var template =
     '<div class="popup_box">' +
@@ -44,18 +45,28 @@ function fetchControlShiftData(categoriesString, callback) {
       var totalPages = categoryPageNumberMap[categoryInfo];
 
       for (var i = 1; i <= totalPages; i++) {
-        var requestUrl = getControlShiftUrl(domain, category, i);
-
         allPageRequests.push($.ajax({
-          url: requestUrl,
+          url: getControlShiftUrl(domain, category, i),
           dataType: 'jsonp',
           success: function(data) {
-            var markers = L.layerGroup();
             var categoryName = data.name || category;
+            var markers;
+
+            if (layerGroups[categoryName]) {
+              markers = layerGroups[categoryName];
+            } else {
+              markers = L.layerGroup();
+            }
+
             if (data.results) {
               data.results.forEach(function(petition) {
+                if (petition.what.length > characterLimit) {
+                  petition.what = petition.what.substring(0, characterLimit) + '...';
+                }
+
                 if (petition.location) {
                   var location = petition.location;
+
                   if (location.latitude && location.longitude) {
                     var marker = L.marker([location.latitude, location.longitude], {icon: getPetitionIcon()});
                     marker.bindPopup(compiledTemplate(petition));
@@ -66,7 +77,7 @@ function fetchControlShiftData(categoriesString, callback) {
               layerGroups[categoryName] = markers;
             }
           }
-        }))
+        }));
       }
     });
 
