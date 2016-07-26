@@ -16,9 +16,9 @@ function fetchControlShiftData(categoriesString, callback) {
   }
 
   var categories = categoriesString.split(categorySeparator);
-  
+
   var categoryPageNumberMap = getPagesForEachCategory(categories);
-  
+
   $.when.apply($, firstPageRequests).done(function() {
     categories.forEach(function(categoryInfo) {
       createCampaignMarkersForCategory(categoryInfo, categoryPageNumberMap);
@@ -30,7 +30,7 @@ function fetchControlShiftData(categoriesString, callback) {
 
 function getPagesForEachCategory(categories) {
   var categoryPageNumberMap = {};
-  
+
   categories.forEach(function(categoryInfo) {
     var domain = categoryInfo.split(urlSeparator)[0];
     var category = categoryInfo.split(urlSeparator)[1];
@@ -58,7 +58,7 @@ function createCampaignMarkersForCategory(categoryInfo, categoryPageNumberMap) {
       dataType: 'jsonp',
       success: function(data) {
         createCampaignMarkers(data);
-      } 
+      }
     }))
   }
 }
@@ -76,12 +76,12 @@ function createCampaignMarkers(data) {
   if (data.results) {
     data.results.forEach(function(petition) {
       if (petition.what.length > characterLimit) {
-        petition.what = petition.what.substring(0, characterLimit) + '...';
+        petition.what = petition.what.substring(0, characterLimit) + '…';
       }
 
       if (petition.location) {
         var location = petition.location;
-        
+
         if (location.latitude && location.longitude) {
           var marker = L.marker([location.latitude, location.longitude], {icon: getPetitionIcon()});
           marker.bindPopup(compiledTemplate(petition));
