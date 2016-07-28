@@ -76,10 +76,19 @@ map.scrollWheelZoom.disable();
 
 L.esri.basemapLayer("Streets").addTo(map);
 
+var $controlContainer = $(map._controlContainer);
+
+if ($controlContainer.children('.leaflet-top.leaflet-center').length == 0) {
+  $controlContainer.append('<div class="leaflet-top leaflet-center"></div>');
+  map._controlCorners.topcenter = $controlContainer
+    .children('.leaflet-top.leaflet-center').first()[0];
+}
 new L.Control.GeoSearch({
   provider: new L.GeoSearch.Provider.Google(),
   "zoomLevel": searchZoom,
-  "showMarker": false
+  "showMarker": false,
+  "searchLabel": 'search for addresss...',
+  "position": 'topcenter'
 }).addTo(map);
 
 // Here's the Tabletop feed
