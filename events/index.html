@@ -1,16 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head prefix="og: http://wcfcourier.com/app/special/tabletop_to_leaflet/">
-<head>
-<head>
   <base href="/">
 	<title>350.org Megamap: Year of Living Dangerously</title>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-    <!-- Mobile meta tags-->
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <!-- Mobile meta tags-->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta name="MobileOptimized" content="320"/>
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta http-equiv="cleartype" content="on">
@@ -31,52 +29,47 @@
 	<meta property="twitter:description" content="Join A Watch-Party for 'Years of Living Dangerously'" />
 	<meta property="twitter:image" content="http://350.org/sites/all/themes/threefifty/logo.gif">
 
-        <link rel="stylesheet" href="css/leaflet.css" />
-        <!--[if lte IE 8]>
-            <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.ie.css" />
-            <![endif]-->
-            <!--[if IE]>
-            <style type="text/css">.leaflet-top { top: 60px; }</style>
-            <![endit]-->
-        <script src="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.ie.css" /><![endif]-->
+  <!--[if IE]><style type="text/css">.leaflet-top { top: 60px; }</style><![endif]-->
+  <script src="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.js"></script>
 
 	<!-- Javascript -->
-	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 
-        <script type="text/javascript" src="markercluster/leaflet.markercluster.js"></script>
-        <link rel="stylesheet" href="markercluster/MarkerCluster.css" />
-        <link rel="stylesheet" href="markercluster/MarkerCluster.Default.css" />
-        <!--[if lte IE 8]><link rel="stylesheet" href="markercluster/MarkerCluster.Default.ie.css" /><![endif]-->
+  <script type="text/javascript" src="bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+  <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css" />
 
-        <script src="js/esri-leaflet.min.js"></script>
+  <script src="bower_components/esri-leaflet/dist/esri-leaflet.js"></script>
 
-        <script src="geosearch/js/l.control.geosearch.js"></script>
-        <script src="geosearch/js/l.geosearch.provider.google.js"></script>
-        <link rel="stylesheet" href="geosearch/css/l.geosearch.css" />
+  <script src="bower_components/leaflet-geosearch/src/js/l.control.geosearch.js"></script>
+  <script src="bower_components/leaflet-geosearch/src/js/l.geosearch.provider.google.js"></script>
+  <link rel="stylesheet" href="bower_components/leaflet-geosearch/src/css/l.geosearch.css" />
 
-        <script src="addmarker/Control.AddMarker.js"></script>
-        <link rel="stylesheet" href="addmarker/addmarker.css" />
-        <!--[if lte IE 8]><link rel="stylesheet" href="addmarker/addmarker.ie.css" /><![endif]-->
+  <script src="addmarker/Control.AddMarker.js"></script>
+  <link rel="stylesheet" href="addmarker/addmarker.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="addmarker/addmarker.ie.css" /><![endif]-->
 
-        <script src="js/leaflet.control.legendlayers.js"></script>
+  <script src="js/leaflet.control.legendlayers.js"></script>
 
-	<link rel="stylesheet" href="css/bootstrap.min.css" />
-	<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+	<link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap-responsive.min.css" />
 	<link rel="stylesheet" href="css/style.css" />
 
-	<script type="text/javascript" src="js/tabletop.js"></script>
-	<script type="text/javascript" src="js/handlebars.js"></script>
+  <script type="text/javascript" src="bower_components/tabletop/src/tabletop.js"></script>
+  <script type="text/javascript" src="bower_components/handlebars/handlebars.min.js"></script>
 
-        <script id="handlebars_template" type="text/x-handlebars-template">
-          <div class="popup_box">
-            <div class="popup_box_header">
-              <strong><a href="{{ website }}">{{ name }}</a></strong>
-            </div>
-            <em>{{ geom }}</em>
-            <hr />
-            {{ description }}
-          </div>
-        </script>
+  <script id="handlebars_template" type="text/x-handlebars-template">
+    <div class="popup_box">
+      <div class="popup_box_header">
+        <strong><a href="{{ website }}">{{ name }}</a></strong>
+      </div>
+      <em>{{ geom }}</em>
+      <hr />
+      {{ description }}
+    </div>
+  </script>
 
   <script type="text/javascript" src="js/template-service.js"></script>
   <script type="text/javascript" src="js/action-kit-service.js"></script>
@@ -92,8 +85,6 @@
 	</noscript>
 
 	<div id="map"></div>
-
-
 
 	<script data-spreadsheet="0Agcr__L1I1PDdEV4MTljMHI5V3hhS3V4MDBzSFNxQUE" 
                 data-map-args="notmainpage=true&gl=n&lat=37.4&lng=-98.665&zoom=3&hpe=y&dateAttr=datetime"
