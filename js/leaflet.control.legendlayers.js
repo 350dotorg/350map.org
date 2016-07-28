@@ -66,6 +66,7 @@ L.Control.LegendLayers = L.Control.extend({
 	_initLayout: function () {
 		var className = 'leaflet-control-layers',
 		    container = this._container = L.DomUtil.create('div', className);
+                container.className += ' leaflet-control-legendlayers';
 
 		//Makes this work on IE10 Touch devices by stopping it from firing a mouseout event when the touch is released
 		container.setAttribute('aria-haspopup', true);

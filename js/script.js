@@ -285,11 +285,11 @@ function populateMap() {
   clusters.addTo(map);
 
   if (layerControl) {
-    var options = {
-      collapsed: !layerControlAlwaysShown
-    };
-
-    var _control = L.control.legendlayers(null, uiLayers, icons, options).addTo(map);
+    var _control = L.control.legendlayers(null, uiLayers, icons).addTo(map);
+    if (layerControlAlwaysShown) {
+      $(_control._container)
+        .addClass("leaflet-control-layers-always-expanded");
+    }
   }
 
   if (addMarkerControl) {
