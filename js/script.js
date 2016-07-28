@@ -87,7 +87,7 @@ new L.Control.GeoSearch({
   provider: new L.GeoSearch.Provider.Google(),
   "zoomLevel": searchZoom,
   "showMarker": false,
-  "searchLabel": 'search for addresss...',
+  "searchLabel": 'search for address...',
   "position": 'topcenter'
 }).addTo(map);
 
