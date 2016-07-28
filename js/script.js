@@ -79,7 +79,7 @@ L.esri.basemapLayer("Streets").addTo(map);
 new L.Control.GeoSearch({
   provider: new L.GeoSearch.Provider.Google(),
   "zoomLevel": searchZoom,
-  "disableMarker": true
+  "showMarker": false
 }).addTo(map);
 
 // Here's the Tabletop feed
