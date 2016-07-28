@@ -1,6 +1,11 @@
+var config = require("./config.js");
+var iconService = require("./icon-service.js");
+var actionKitService = require("./action-kit-service.js");
+var controlShiftService = require("./control-shift-service.js");
+
 var getMegamapArgs = function() {
   var argsStr = window.location.search.replace(/^\?/, '');
-  var embedArgsStr = $("script[src='js/script.js']").data("map-args") || '';
+  var embedArgsStr = $("script[src='bundle.js']").data("map-args") || '';
 
   if (argsStr) {
     argsStr += '&' + embedArgsStr;
@@ -96,19 +101,19 @@ new L.Control.GeoSearch({
 var jqueryNoConflict = jQuery;
 
 jqueryNoConflict(document).ready(function() {
-  var scriptTag = $("script[src='js/script.js']");
+  var scriptTag = $("script[src='bundle.js']");
   var root_spreadsheet = scriptTag.data("spreadsheet");
 
-  fetchActionKitData(args.actionkit, function(actionKitLayerGroups) {
+  actionKitService.fetchActionKitData(args.actionkit, function(actionKitLayerGroups) {
     $.extend(layers, actionKitLayerGroups);
     Object.keys(actionKitLayerGroups).forEach(function(campaignName) {
-      icons[campaignName] = getEventIcon();
+      icons[campaignName] = iconService.getEventIcon();
     });
 
-    fetchControlShiftData(args.controlshift, function(controlShiftLayerGroups) {
+    controlShiftService.fetchControlShiftData(args.controlshift, function(controlShiftLayerGroups) {
       $.extend(layers, controlShiftLayerGroups);
       Object.keys(controlShiftLayerGroups).forEach(function(category) {
-        icons[category] = getPetitionIcon();
+        icons[category] = iconService.getPetitionIcon();
       });
 
       initializeTabletopObject(root_spreadsheet);

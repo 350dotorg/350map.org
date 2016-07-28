@@ -1,15 +1,19 @@
+var config = require("./config.js");
+var iconService = require("./icon-service.js");
+var templateService = require("./template-service.js");
+
 var urlSeparator = ':';
 var categorySeparator = '|';
 var characterLimit = 200;
 
-var compiledTemplate = Handlebars.compile(getControlShiftTemplate());
+var compiledTemplate = Handlebars.compile(templateService.getControlShiftTemplate());
 
 var firstPageRequests = [];
 var allPageRequests = [];
 
 var layerGroups = {};
 
-function fetchControlShiftData(categoriesString, callback) {
+module.exports.fetchControlShiftData = function(categoriesString, callback) {
   if (!categoriesString) {
     callback({});
     return;
@@ -83,7 +87,7 @@ function createCampaignMarkers(data) {
         var location = petition.location;
 
         if (location.latitude && location.longitude) {
-          var marker = L.marker([location.latitude, location.longitude], {icon: getPetitionIcon()});
+          var marker = L.marker([location.latitude, location.longitude], {icon: iconService.getPetitionIcon()});
           marker.bindPopup(compiledTemplate(petition));
           markers.addLayer(marker);
         }

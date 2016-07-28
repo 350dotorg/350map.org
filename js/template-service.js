@@ -1,4 +1,4 @@
-function getActionKitTemplate() {
+module.exports.getActionKitTemplate = function() {
   return '<div class="popup_box"> ' +
     '<div class="popup_box_header"> ' +
     '<strong><a target="_blank" href="{{ rsvp_url }}">{{ name }}</a></strong> ' +
@@ -9,7 +9,7 @@ function getActionKitTemplate() {
 
 }
 
-function getControlShiftTemplate() {
+module.exports.getControlShiftTemplate = function() {
   return '<div class="popup_box">' +
     '<div class="popup_box_header">' +
     '<strong><a target="_blank" href="{{ url }}">{{ title }}</a></strong>' +

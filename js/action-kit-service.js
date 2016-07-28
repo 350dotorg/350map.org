@@ -1,4 +1,8 @@
-function fetchActionKitData(campaignsString, callback) {
+var config = require("./config.js");
+var iconService = require("./icon-service.js");
+var templateService = require("./template-service.js");
+
+module.exports.fetchActionKitData = function fetchActionKitData(campaignsString, callback) {
   if (!campaignsString) {
     callback({});
     return;
@@ -6,7 +10,7 @@ function fetchActionKitData(campaignsString, callback) {
 
   var separator = '|';
   var campaigns = campaignsString.split(separator);
-  var compiledTemplate = Handlebars.compile(getActionKitTemplate());
+  var compiledTemplate = Handlebars.compile(templateService.getActionKitTemplate());
   var layerGroups = {};
   var actionKitRequests = [];
 
@@ -20,7 +24,7 @@ function fetchActionKitData(campaignsString, callback) {
         if (data.events) {
           data.events.forEach(function(event) {
             if (event.latitude && event.longitude) {
-              var marker = L.marker([event.latitude, event.longitude], {icon: getEventIcon()});
+              var marker = L.marker([event.latitude, event.longitude], {icon: iconService.getEventIcon()});
               event.start_time = moment(event.start_time, 'H:mm:ss').format("h:mma");
               event.event_date = moment(event.event_date).format("MMMM D, YYYY");
               marker.bindPopup(compiledTemplate(event));
