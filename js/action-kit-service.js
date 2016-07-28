@@ -6,15 +6,7 @@ function fetchActionKitData(campaignsString, callback) {
 
   var separator = '|';
   var campaigns = campaignsString.split(separator);
-  var template =
-    '<div class="popup_box"> ' +
-    '<div class="popup_box_header"> ' +
-    '<strong><a target="_blank" href="{{ rsvp_url }}">{{ name }}</a></strong> ' +
-    '</div> <em>{{ city }}{{#if state }}, {{/if }}{{ state }}{{#if country }},{{/if }} {{ country }}</em> <hr /> ' +
-    '{{ start_time }} <br> {{ event_date }} <br><br> ' +
-    '{{ venue }} <br> {{ address }} <br> {{ city }}{{#if state }}, {{/if }}{{ state }}{{#if country }},{{/if }} {{ country }} <br><br>' +
-    '<strong><a href="{{ rsvp_url }}">RSVP</a></strong> </div>';
-  var compiledTemplate = Handlebars.compile(template);
+  var compiledTemplate = Handlebars.compile(getActionKitTemplate());
   var layerGroups = {};
   var actionKitRequests = [];
 
@@ -45,4 +37,5 @@ function fetchActionKitData(campaignsString, callback) {
     callback(layerGroups);
   });
 
+  return $.Deferred().promise();
 }

@@ -92,10 +92,18 @@ jqueryNoConflict(document).ready(function() {
 
   fetchActionKitData(args.actionkit, function(actionKitLayerGroups) {
     $.extend(layers, actionKitLayerGroups);
-    Object.keys(layers).forEach(function(campaignName) {
+    Object.keys(actionKitLayerGroups).forEach(function(campaignName) {
       icons[campaignName] = getEventIcon();
     });
-    initializeTabletopObject(root_spreadsheet);
+
+    fetchControlShiftData(args.controlshift, function(controlShiftLayerGroups) {
+      $.extend(layers, controlShiftLayerGroups);
+      Object.keys(controlShiftLayerGroups).forEach(function(category) {
+        icons[category] = getPetitionIcon();
+      });
+
+      initializeTabletopObject(root_spreadsheet);
+    });
   });
 });
 
