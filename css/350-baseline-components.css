@@ -68,6 +68,11 @@
 .bg-transparent{
   color:#fff;}
 .bg-blue,
+/*{
+  .leaflet-popup-content-wrapper {
+    background-color:#0f81e8;
+  }
+},*/
 .button.bg-blue{
   background-color:#0f81e8;
   border-color:rgba(255,255,255,0.2);
@@ -223,7 +228,7 @@ a:hover .tf-logo{
   .mobile-hide{
     display:none !important;}
 
- 
+
 
 }
 /* Tablet and narrower */
@@ -233,7 +238,7 @@ a:hover .tf-logo{
     display:inherit !important;}
   .tablet-hide{
     display:none !important;}
-    
+
   .right,
   .float-right{
     float:right;}

@@ -16,13 +16,15 @@ function getActionKitTemplate() {
 
 function getControlShiftTemplate() {
   return '<div class="popup_box">' +
-    '<div class="popup_box_header">' +
-    '<div>PETITION</div>' +
-    '<strong><a target="_blank" href="{{ url }}">{{ title }}</a></strong>' +
-    '</div>' +
-    '<div>TO: {{ who }}</div>' +
-    '<div>{{ what }}</div>' +
-    '<div>{{ signature_count }} signatures out of {{ goal }} needed.</div>' +
-    '<div><a target="_blank" href="{{ url }}">Sign the Petition</a></div>' +
+      '<div class="bg-blue" class="popup-header-text">' +
+        '<div class="popup_box_header">' +
+          '<div>PETITION</div>' +
+          '<strong><a target="_blank" href="{{ url }}">{{ title }}</a></strong>' +
+        '</div>' +
+      '</div>' +
+      '<div class="bold_margin">TO: {{ who }}</div>' +
+      '<div>{{ what }}</div>' +
+      '<div class="bold_margin">{{ signature_count }} signatures out of {{ goal }} needed.</div>' +
+      '<div class="button arrow-right"><a class="popup-button-text" target="_blank" href="{{ url }}">Sign the Petition</a></div>' +
     '</div>';
 }
