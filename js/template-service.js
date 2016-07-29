@@ -1,21 +1,28 @@
 function getActionKitTemplate() {
-  return '<div class="popup_box"> ' +
-    '<div class="popup_box_header"> ' +
-    '<strong><a target="_blank" href="{{ rsvp_url }}">{{ name }}</a></strong> ' +
-    '</div> <em>{{ city }}{{#if state }}, {{/if }}{{ state }}{{#if country }},{{/if }} {{ country }}</em> <hr /> ' +
-    '{{ start_time }} <br> {{ event_date }} <br><br> ' +
-    '{{ venue }} <br> {{ address }} <br> {{ city }}{{#if state }}, {{/if }}{{ state }}{{#if country }},{{/if }} {{ country }} <br><br>' +
-    '<strong><a href="{{ rsvp_url }}">RSVP</a></strong> </div>';
+  return '<div class="popup_box">' +
+    '<div class="popup_box_header">' +
+    '<a target="_blank" href="{{ rsvp_url }}">{{ name }}</a>' +
+    '</div>' +
+    '<div>{{ city }}{{#if state }}, {{/if }}{{ state }}{{#if country }},{{/if }} {{ country }}</div>' +
+    '<div>{{ start_time }}</div>' +
+    '<div>{{ event_date }}</div>' +
+    '<div>{{ venue }}</div>' +
+    '<div>{{ address }} </div>' +
+    '<div>{{ city }}{{#if state }}, {{/if }}{{ state }}{{#if country }},{{/if }} {{ country }}</div>' +
+    '<a href="{{ rsvp_url }}">RSVP</a>' +
+    '</div>';
 
 }
 
 function getControlShiftTemplate() {
   return '<div class="popup_box">' +
     '<div class="popup_box_header">' +
+    '<div>PETITION</div>' +
     '<strong><a target="_blank" href="{{ url }}">{{ title }}</a></strong>' +
-    '</div><div><em>{{ location.query }}</em></div><hr />' +
-    '{{ who }}<br><br>' +
-    '{{ what }} <br><br>' +
-    '{{ signature_count }} out of {{ goal }} signatures' +
+    '</div>' +
+    '<div>TO: {{ who }}</div>' +
+    '<div>{{ what }}</div>' +
+    '<div>{{ signature_count }} signatures out of {{ goal }} needed.</div>' +
+    '<div><a target="_blank" href="{{ url }}">Sign the Petition</a></div>' +
     '</div>';
 }
