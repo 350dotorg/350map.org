@@ -1,17 +1,3 @@
-@font-face{
-  font-family: 'GraphBlack';
-  src: url('./fonts/Graph-Black.otf') format('opentype');
-}
-
-@font-face{
-  font-family: 'GraphCondensedBold';
-  src: url('./fonts/GraphCondensed-Bold.otf') format('opentype');
-}
-
-@font-face{
-  font-family: 'GraphBold';
-  src: url('./fonts/Graph-Bold.otf') format('opentype');
-}
 
 .leaflet-center {
   width: 40%;
@@ -65,13 +51,12 @@
   text-transform: uppercase;
   color: #ffffff;
   text-decoration: none;
-  font-family: GraphBold;
 }
 
 .popup_box_header a {
   color: #ffffff;
   text-decoration: none;
-  font-family: GraphBold;
+  /*font-family: GraphBold;*/
 }
 
 .popup_box .bold_margin {
