@@ -184,6 +184,9 @@ function startUpLeafet(spreadsheetData) {
       if (!dataLat || !dataLong || !parseFloat(dataLat) || !parseFloat(dataLong)) {
         continue;
       }
+      if (tabletopData[num].hideonmap === "Yes") {
+        continue; 
+      }
       var date = tabletopData[num][dateAttribute];
       if (hidePastEvents && date) {
         date = new Date(date);
