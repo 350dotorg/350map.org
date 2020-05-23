@@ -4,6 +4,7 @@
   margin-right: auto;
   position: relative;
 }
+
 .leaflet-control-geosearch, .leaflet-control-geosearch ul {
   border-radius: 7px;
   background: none repeat scroll 0 0 rgba(0, 0, 0, 0.25);
@@ -12,6 +13,7 @@
   width: 100%;
   height: auto;
 }
+
 .leaflet-control-geosearch ul li {
   background: none repeat scroll 0 0 rgba(255, 255, 255, 0.75);
   border-radius: 4px;
@@ -20,9 +22,11 @@
   font: 12px arial;
   text-indent: 4px;
 }
+
 .leaflet-container .leaflet-control-geosearch .glass {
   width: 0 !important;
 }
+
 .leaflet-container .leaflet-control-geosearch input {
   text-indent: 8px;
   background: none;
@@ -43,6 +47,67 @@
   top: 4px;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.75);
-  
 }
 
+/* Overrides for new popup style */
+.leaflet-container a.leaflet-popup-close-button, .leaflet-container a.leaflet-popup-close-button:hover {
+  z-index: 1;
+  color: #ffffff;
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  min-width: 250px;
+}
+
+.leaflet-popup-content-wrapper {
+  padding: 0;
+}
+
+.popup_button {
+  margin-top: 8px;
+}
+
+.button .popup_button_text {
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.popup_box_header {
+  padding: 19px;
+}
+
+.popup_box_header a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.popup_box_type {
+  text-transform: uppercase;
+  font-family: Menlo, Monaco, Courier, monospace;
+  font-size: 0.8em;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+}
+
+.popup_box_header_wrapper {
+  padding: 19px;
+}
+
+.popup_box_info {
+  padding: 19px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.space {
+  margin: 8px 0;
+}
+
+.space-bottom {
+  margin-bottom: 8px;
+}
