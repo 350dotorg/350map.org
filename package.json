@@ -1,0 +1,41 @@
+{
+  "name": "350map.org",
+  "version": "1.0.0",
+  "description": "Events map by 350.org and Thoughtworks",
+  "main": "index.html",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/350dotorg/350map.org.git"
+  },
+  "keywords": [
+    "leaflet",
+    "map",
+    "climate",
+    "action",
+    "digital",
+    "organizing"
+  ],
+  "author": "350.org, Thoughtworks",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/350dotorg/350map.org/issues"
+  },
+  "homepage": "https://github.com/350dotorg/350map.org#readme",
+  "dependencies": {
+    "bootstrap-css-only": "^2.3.2",
+    "esri-leaflet": "~1.0",
+    "handlebars": "~4.0",
+    "jquery": "^2.2.4",
+    "leaflet": "~0.7",
+    "leaflet-geosearch": "1",
+    "leaflet.markercluster": "~0.5",
+    "moment": "~2.13",
+    "tabletop": "~1.4"
+  }
+}

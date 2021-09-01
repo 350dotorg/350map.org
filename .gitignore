@@ -4,3 +4,6 @@
 *~
 .idea
 .DS_Store
+_site
+.jekyll-cache
+node_modules
